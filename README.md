@@ -10,12 +10,3 @@ npm install
 ```
 npm run dev
 ```
-
-## Back-end
-No terminal:
-```
-cd back-end
-```
-```
-npm install
-```
