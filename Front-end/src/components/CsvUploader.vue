@@ -4,6 +4,7 @@ import papaparse from 'papaparse';
 import CsvTable from './CsvTable.vue';
 
 const csvData = ref([]);
+const jsonData = ref(null);
 
 const handleFileUpload = (ev) => {
     const file = ev.target.files[0];
@@ -13,6 +14,7 @@ const handleFileUpload = (ev) => {
                 header: true,
                 complete: (results) => {
                     csvData.value = results.data;
+                    jsonData.value = JSON.stringify(results.data);
                 },
                 error: (error) => {
                     console.error('Erro ao fazer o parse do CSV:', error);
