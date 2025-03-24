@@ -38,6 +38,9 @@ const handleFileUpload = (ev) => {
 
     </label>
 
+    <label class="data-table">
+        <CsvTable :csvData="csvData"/>
+    </label>
 
 </template>
 
@@ -55,6 +58,18 @@ const handleFileUpload = (ev) => {
     border-radius: 25px;
     padding: 10px 20px;
     cursor: pointer;
+    color: #011738;
+    background-color: none;
+}
+
+.data-table {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    display: inline-block;
+    text-align: center;
+    border: 2px solid #000;
+    border-radius: 25px;
+    padding: 10px 20px;
     color: #011738;
     background-color: none;
 }

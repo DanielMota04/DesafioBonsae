@@ -18,7 +18,7 @@ defineProps(['csvData']);
 
 </template>
 
-<style scoped>
+<!-- <style scoped>
 table {
     border-collapse: collapse;
     width: 100%;
@@ -31,4 +31,4 @@ td {
     padding: 8px;
     text-align: left;
 }
-</style>
+</style> -->
