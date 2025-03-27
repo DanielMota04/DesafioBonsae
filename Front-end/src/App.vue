@@ -1,10 +1,8 @@
 <script setup>
-import CsvUploader from './components/CsvUploader.vue';
+import Home from './pages/Home.vue';
 </script>
 
 <template>
-  <div>
-    <CsvUploader/>
-</div>
+  <Home/>
 </template>
 
