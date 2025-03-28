@@ -2,23 +2,28 @@
 </script>
 
 <template>
-    <div>
+    <header class="header">
         <i class="bi bi-file-earmark-ruled"></i>
-        <h2>Data import control</h2>
-    </div>
+        <h2>Data Import Control</h2>
+    </header>
 </template>
 
 <style scoped>
-div {
+.header {
     display: flex;
     align-items: center;
-    height: 2rem;
+    padding: 1rem 2rem;
+    background: whitesmoke;
 }
 
 h2 {
-    margin-left: 1rem;
+    margin: 0 0 0 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
 }
-.bi{
+
+.bi {
     font-size: 1.5rem;
+    color: #007bff;
 }
 </style>

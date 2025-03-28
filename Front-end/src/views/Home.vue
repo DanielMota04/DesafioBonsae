@@ -1,40 +1,38 @@
 <script setup>
-import CsvUploader from '../components/CsvUploader.vue';
 import ImportProcess from '../components/ImportProcess.vue';
 </script>
 
 <template>
-    <div>
-        <div class="main-container">
-            <div class="main-container__title">
-                <h3>Controle de importação</h3>
-                <p>Gerencie seus processos de importação</p>
-            </div>
-            <button type="button" class="btn btn-primary">+ Novo Processo</button>
-        </div>
-        <div class="process-container">
-            <ImportProcess />
-        </div>
-
+  <div class="home-container">
+    <div class="title-section">
+      <div>
+        <h1>Controle de Importação</h1>
+        <p>Gerencie seus processos de importação de dados</p>
+      </div>
+      <button class="btn btn-primary">+ Novo Processo</button>
     </div>
+    <ImportProcess />
+  </div>
 </template>
 
 <style scoped>
-div {
-    background: #d5d5d5;
+.home-container {
+  padding: 2rem;
 }
 
-.main-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 2rem;
-    margin: 0;
-    align-items: center;
-    height: 100vh;
+.title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-.btn-primary {
-    padding: 0 1rem;
+h1 {
+  font-size: 1.7rem;
+  font-weight: bold;
 }
 
+p {
+  color: gray;
+}
 </style>
