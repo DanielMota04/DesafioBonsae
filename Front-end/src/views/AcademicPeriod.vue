@@ -1,12 +1,9 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
+import ProcessHeader from '../components/ProcessHeader.vue';
 
 const router = useRouter();
-
-const backToList = () => {
-    router.push("/")
-}
 
 const nextStep = () => {
     // adicionar validação do período letivo
@@ -20,10 +17,7 @@ const academicPeriodInput = ref("");
 <template>
     <div class="home-container">
         <div class="title-section">
-            <div>
-                <p @click="backToList"><i class="bi bi-arrow-left"></i> Voltar para a lista</p>
-                <h1>Importação de dados: Processo X</h1>
-            </div>
+            <ProcessHeader/>
 
             <div class="steps">
                 <!-- Aqui vao estar aquelas bolinhas de etapas-->
@@ -46,17 +40,6 @@ const academicPeriodInput = ref("");
 
 .title-section {
     margin-bottom: 1.5rem;
-}
-
-h1 {
-    font-size: 1.7rem;
-    font-weight: bold;
-}
-
-p {
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
 }
 
 .form-section {

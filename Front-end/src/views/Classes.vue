@@ -7,7 +7,7 @@ const router = useRouter();
 
 const nextStep = () => {
     // adicionar validações
-    router.push("/classes")
+    router.push("/users")
 }
 
 </script>
@@ -22,7 +22,7 @@ const nextStep = () => {
             </div>
 
             <div class="uploader-section">
-                <h3>Disciplinas</h3>
+                <h3>Turmas</h3>
                 <CsvUploader />
             </div>
 
