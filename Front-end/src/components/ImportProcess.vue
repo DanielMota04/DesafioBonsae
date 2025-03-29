@@ -18,7 +18,6 @@
           </tr>
         </thead>
         <tbody>
-            <!--necessita deixar dinâmico-->
           <tr>
             <td><strong>proc-1</strong></td>
             <td>2023/2</td>
