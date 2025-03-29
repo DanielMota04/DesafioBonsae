@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 const newProcess = () => {
-  router.push("/periodoLetivo")
+  router.push("/academicPeriod")
 }
 
 </script>
