@@ -1,5 +1,13 @@
 <script setup>
 import ImportProcess from '../components/ImportProcess.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const newProcess = () => {
+  router.push("/periodoLetivo")
+}
+
 </script>
 
 <template>
@@ -9,7 +17,7 @@ import ImportProcess from '../components/ImportProcess.vue';
         <h1>Controle de Importação</h1>
         <p>Gerencie seus processos de importação de dados</p>
       </div>
-      <button class="btn btn-primary">+ Novo Processo</button>
+      <button class="btn btn-primary" @click="newProcess">+ Novo Processo</button>
     </div>
     <ImportProcess />
   </div>
