@@ -1,4 +1,29 @@
 <script setup>
+import ImportProcessRow from './ImportProcessRow.vue';
+
+const proc01 = {
+  ProcessID: "proc-01",
+  academicPeriod: "2024.1",
+  startDate: "01/02/2024 11:30",
+  endDate: "01/06/2024 10:45",
+  status: "Finalizado"
+};
+
+const proc02 = {
+  ProcessID: "proc-02",
+  academicPeriod: "2024.2",
+  startDate: "01/07/2024 07:30",
+  endDate: "30/11/2024 16:10",
+  status: "Finalizado"
+};
+
+const proc03 = {
+  ProcessID: "proc-03",
+  academicPeriod: "2025.1",
+  startDate: "01/02/2025 12:40",
+  endDate: "",
+  status: "Em andamento"
+};
 </script>
 
 <template>
@@ -18,27 +43,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>proc-1</strong></td>
-            <td>2023/2</td>
-            <td>15/08/2023, 00:00</td>
-            <td>-</td>
-            <td><span class="status in-progress">Em Andamento</span></td>
-            <td>
-              <button class="btn btn-danger">✖ Abortar</button>
-              <button class="btn btn-primary">→ Continuar</button>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>proc-2</strong></td>
-            <td>2023/1</td>
-            <td>10/07/2023, 00:00</td>
-            <td>15/07/2023, 00:00</td>
-            <td><span class="status completed">Concluído</span></td>
-            <td>
-              <button class="btn btn-secondary">→ Visualizar</button>
-            </td>
-          </tr>
+          <ImportProcessRow :ProcessID="proc01.ProcessID" :academicPeriod="proc01.academicPeriod"
+            :startDate="proc01.startDate" :endDate="proc01.endDate" :status="proc01.status" />
+          <ImportProcessRow :ProcessID="proc02.ProcessID" :academicPeriod="proc02.academicPeriod"
+            :startDate="proc02.startDate" :endDate="proc02.endDate" :status="proc02.status" />
+          <ImportProcessRow :ProcessID="proc03.ProcessID" :academicPeriod="proc03.academicPeriod"
+            :startDate="proc03.startDate" :endDate="proc03.endDate" :status="proc03.status" />
+
+
         </tbody>
       </table>
     </div>
@@ -73,32 +85,9 @@ thead {
   text-align: left;
 }
 
-th, td {
+th,
+td {
   padding: 0.75rem;
   border-bottom: 1px solid #ddd;
-}
-
-.status {
-  padding: 0.25rem 0.5rem;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.in-progress {
-  background: lightblue;
-  color: blue;
-}
-
-.completed {
-  background: lightgreen;
-  color: green;
-}
-
-.btn {
-  padding: 0.5rem 0.75rem;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  margin-right: 0.5rem;
 }
 </style>
