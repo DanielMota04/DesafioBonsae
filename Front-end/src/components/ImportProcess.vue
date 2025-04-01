@@ -1,29 +1,30 @@
 <script setup>
 import ImportProcessRow from './ImportProcessRow.vue';
 
-const proc01 = {
-  ProcessID: "proc-01",
-  academicPeriod: "2024.1",
-  startDate: "01/02/2024 11:30",
-  endDate: "01/06/2024 10:45",
-  status: "Finalizado"
-};
+const processes = [
+  {
+    ProcessID: "proc-01",
+    academicPeriod: "2024.1",
+    startDate: "01/02/2024 11:30",
+    endDate: "01/06/2024 10:45",
+    status: "Finalizado"
+  },
+  {
 
-const proc02 = {
-  ProcessID: "proc-02",
-  academicPeriod: "2024.2",
-  startDate: "01/07/2024 07:30",
-  endDate: "30/11/2024 16:10",
-  status: "Finalizado"
-};
-
-const proc03 = {
-  ProcessID: "proc-03",
-  academicPeriod: "2025.1",
-  startDate: "01/02/2025 12:40",
-  endDate: "",
-  status: "Em andamento"
-};
+    ProcessID: "proc-02",
+    academicPeriod: "2024.2",
+    startDate: "01/07/2024 07:30",
+    endDate: "30/11/2024 16:10",
+    status: "Finalizado"
+  },
+  {
+    ProcessID: "proc-03",
+    academicPeriod: "2025.1",
+    startDate: "01/02/2025 12:40",
+    endDate: "",
+    status: "Em andamento"
+  }
+]
 </script>
 
 <template>
@@ -43,12 +44,9 @@ const proc03 = {
           </tr>
         </thead>
         <tbody>
-          <ImportProcessRow :ProcessID="proc01.ProcessID" :academicPeriod="proc01.academicPeriod"
-            :startDate="proc01.startDate" :endDate="proc01.endDate" :status="proc01.status" />
-          <ImportProcessRow :ProcessID="proc02.ProcessID" :academicPeriod="proc02.academicPeriod"
-            :startDate="proc02.startDate" :endDate="proc02.endDate" :status="proc02.status" />
-          <ImportProcessRow :ProcessID="proc03.ProcessID" :academicPeriod="proc03.academicPeriod"
-            :startDate="proc03.startDate" :endDate="proc03.endDate" :status="proc03.status" />
+          <ImportProcessRow v-for="process in processes" :key="process.ProcessID" :ProcessID="process.ProcessID"
+            :academicPeriod="process.academicPeriod" :startDate="process.startDate" :endDate="process.endDate"
+            :status="process.status" />
 
 
         </tbody>
