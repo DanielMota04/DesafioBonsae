@@ -27,34 +27,6 @@ const statusClass = computed(() => {
 </template>
 
 <style scoped>
-.process-container {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px #ddd;
-}
-
-h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.table-container {
-    margin-top: 1rem;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-}
-
-thead {
-    background: whitesmoke;
-    text-align: left;
-}
-
-th,
 td {
     padding: 0.75rem;
     border-bottom: 1px solid #ddd;
