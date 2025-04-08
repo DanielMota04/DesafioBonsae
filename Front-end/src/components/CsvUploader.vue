@@ -3,8 +3,18 @@ import { ref } from 'vue';
 import papaparse from 'papaparse';
 import CsvTable from './CsvTable.vue';
 
+const props = defineProps({
+  requiredHeaders: {
+    type: Array,
+    required: true
+  }
+});
+
+const emits = defineEmits(['validCsv']);
+
 const csvData = ref([]);
 const jsonData = ref(null);
+
 
 const handleFileUpload = (ev) => {
     const file = ev.target.files[0];
@@ -13,8 +23,20 @@ const handleFileUpload = (ev) => {
             papaparse.parse(file, {
                 header: true,
                 complete: (results) => {
-                    csvData.value = results.data;
-                    jsonData.value = JSON.stringify(results.data);
+                    const headers = results.meta.fields;
+                    const isHeaderValid = props.requiredHeaders.every(header => headers.includes(header));
+
+                    if(isHeaderValid){
+                        console.log("O header ta válido");
+                        csvData.value = results.data;
+                        jsonData.value = JSON.stringify(results.data);
+                        emits('validCsv', {valid: true, data: results.data})
+                    }else{
+                        console.log("Faltam headers");
+                        emits('validCsv', {valid: false, data: []})
+                    }
+
+
                 },
                 error: (error) => {
                     console.error('Erro ao fazer o parse do CSV:', error);

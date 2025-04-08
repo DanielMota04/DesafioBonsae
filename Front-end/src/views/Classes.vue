@@ -1,12 +1,26 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 import CsvUploader from "../components/CsvUploader.vue";
 import ProcessHeader from "../components/ProcessHeader.vue";
 
 const router = useRouter();
 
+const requiredHeaders = ["Disciplina (Código)", "Turma", "Código da turma"]
+
+const validCsv = ref(false);
+const csvData = ref([]);
+
+const handleValidCsv = ({valid, data}) => {
+    validCsv.value = valid;
+    csvData.value = data
+}
+
 const nextStep = () => {
-    // adicionar validações
+    if (!validCsv.value) {
+        alert("O csv não é válido");
+        return
+    }
     router.push("/users")
 }
 
@@ -23,7 +37,7 @@ const nextStep = () => {
 
             <div class="uploader-section">
                 <h3>Turmas</h3>
-                <CsvUploader />
+                <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" />
             </div>
 
             <button class="forward-btn" @click="nextStep">Avançar <i class="bi bi-arrow-right"></i></button>

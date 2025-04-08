@@ -1,33 +1,33 @@
-Período Letivo (Identificação),Disciplina,Código da Disciplina*,Data Inicial,Data Final,Categoria,Período Curricular,Estado,Campus
+PerÃ­odo Letivo (IdentificaÃ§Ã£o),Disciplina,CÃ³digo da Disciplina*,Data Inicial,Data Final,Categoria,PerÃ­odo Curricular,Estado,Campus
 2025.1,Sistemas Operacionais,C102,24/01/2025,16/05/2025,Curso,5,SE,Campus Itabaiana
-2025.1,Sistemas Operacionais,C102,8/1/2025,16/04/2025,Curso,2,SE,Campus Farolândia
-2025.1,,C102,22/02/2025,15/05/2025,Curso,5,SE,Campus Farolândia
+2025.1,Sistemas Operacionais,C102,8/1/2025,16/04/2025,Curso,2,SE,Campus Farolï¿½ndia
+2025.1,,C102,22/02/2025,15/05/2025,Curso,5,SE,Campus Farolï¿½ndia
 2025.1,Algoritmos e Estruturas de Dados,C104,5/3/2025,16/06/2025,Curso,,,
-2025.1,Matemática Discreta,C103,15/02/2025,22/05/2025,Curso,,,
+2025.1,Matemï¿½tica Discreta,C103,15/02/2025,22/05/2025,Curso,,,
 2025.1,Algoritmos e Estruturas de Dados,C104,28/01/2025,20/05/2025,Curso,,,
 2025.1,Redes de Computadores,C101,9/1/2025,20/04/2025,Curso,,,
-2025.1,Matemática Discreta,C103,1/4/2025,18/06/2025,Curso,,SE,Campus Itabaiana
-2025.1,,C105,20/01/2025,19/04/2025,Curso,,SE,Campus Farolândia
+2025.1,Matemï¿½tica Discreta,C103,1/4/2025,18/06/2025,Curso,,SE,Campus Itabaiana
+2025.1,,C105,20/01/2025,19/04/2025,Curso,,SE,Campus Farolï¿½ndia
 2025.1,Redes de Computadores,C101,19/01/2025,1/5/2025,Curso,2,SE,Campus Itabaiana
-2025.1,Banco de Dados,C105,17/02/2025,9/6/2025,Curso,5,SE,Campus Farolândia
-2025.2,Algoritmos e Estruturas de Dados,C104,4/2/2025,27/05/2025,Curso,4,SE,Campus Farolândia
+2025.1,Banco de Dados,C105,17/02/2025,9/6/2025,Curso,5,SE,Campus Farolï¿½ndia
+2025.2,Algoritmos e Estruturas de Dados,C104,4/2/2025,27/05/2025,Curso,4,SE,Campus Farolï¿½ndia
 2025.2,Redes de Computadores,C101,24/06/2025,30/09/2025,Curso,3,SE,Campus Itabaiana
-2025.2,Matemática Discreta,C103,25/01/2025,10/5/2025,Curso,3,SE,Campus Farolândia
+2025.2,Matemï¿½tica Discreta,C103,25/01/2025,10/5/2025,Curso,3,SE,Campus Farolï¿½ndia
 2025.2,Banco de Dados,C105,6/6/2025,20/09/2025,Curso,,SE,Campus Itabaiana
 2025.2,Banco de Dados,C105,16/04/2025,12/8/2025,Curso,3,SE,Campus Itabaiana
-2025.2,,C102,22/05/2025,11/8/2025,Curso,3,SE,Campus Farolândia
+2025.2,,C102,22/05/2025,11/8/2025,Curso,3,SE,Campus Farolï¿½ndia
 2025.2,Algoritmos e Estruturas de Dados,C104,25/03/2025,5/6/2025,Curso,2,,
 2025.2,Algoritmos e Estruturas de Dados,C104,10/5/2025,25/08/2025,Curso,4,,
 2025.2,Sistemas Operacionais,C102,8/5/2025,15/08/2025,Curso,4,,
 2026.1,,C101,22/07/2025,21/10/2025,Curso,6,SE,Campus Itabaiana
-2026.1,Redes de Computadores,C101,22/10/2025,28/01/2026,Curso,5,SE,Campus Farolândia
-2026.1,Matemática Discreta,C103,5/2/2025,30/04/2025,Curso,2,SE,Campus Farolândia
-2026.1,Redes de Computadores,C101,14/03/2025,20/06/2025,Curso,,SE,Campus Farolândia
+2026.1,Redes de Computadores,C101,22/10/2025,28/01/2026,Curso,5,SE,Campus Farolï¿½ndia
+2026.1,Matemï¿½tica Discreta,C103,5/2/2025,30/04/2025,Curso,2,SE,Campus Farolï¿½ndia
+2026.1,Redes de Computadores,C101,14/03/2025,20/06/2025,Curso,,SE,Campus Farolï¿½ndia
 2026.1,Banco de Dados,C105,6/8/2025,17/11/2025,Curso,,SE,Campus Itabaiana
 2026.1,,C102,21/01/2025,12/5/2025,Curso,2,SE,Campus Itabaiana
-2026.1,Matemática Discreta,C103,12/3/2025,14/06/2025,Curso,4,SE,Campus Itabaiana
-2026.2,Banco de Dados,C105,14/03/2025,13/06/2025,Curso,2,SE,Campus Farolândia
+2026.1,Matemï¿½tica Discreta,C103,12/3/2025,14/06/2025,Curso,4,SE,Campus Itabaiana
+2026.2,Banco de Dados,C105,14/03/2025,13/06/2025,Curso,2,SE,Campus Farolï¿½ndia
 2026.2,Banco de Dados,C105,18/12/2025,19/03/2026,Curso,6,,
 2026.2,,C105,30/06/2025,10/9/2025,Curso,4,,
-2026.2,Redes de Computadores,C101,30/06/2025,23/09/2025,Curso,3,SE,Campus Farolândia
-2026.2,Banco de Dados,C105,18/08/2025,20/11/2025,Curso,6,SE,Campus Farolândia
+2026.2,Redes de Computadores,C101,30/06/2025,23/09/2025,Curso,3,SE,Campus Farolï¿½ndia
+2026.2,Banco de Dados,C105,18/08/2025,20/11/2025,Curso,6,SE,Campus Farolï¿½ndia
