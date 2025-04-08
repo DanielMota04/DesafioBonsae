@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
     padding: 1rem 2rem;
-    background: whitesmoke;
+    background: #eef5ff;
 }
 
 h2 {

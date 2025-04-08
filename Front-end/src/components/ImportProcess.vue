@@ -58,7 +58,7 @@ const processes = [
   background: white;
   padding: 1.5rem;
   border-radius: 10px;
-  box-shadow: 0 2px 4px #ddd;
+  box-shadow: 0 2px 4px grey;
 }
 
 h3 {
@@ -72,13 +72,13 @@ h3 {
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #ddd;
+  border: 2px solid #1161D8;
 }
 
 thead {
-  background: whitesmoke;
+  background: #1161D8;
   text-align: left;
+  color: white;
 }
 
 th,
