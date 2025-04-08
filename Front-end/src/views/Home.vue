@@ -17,7 +17,10 @@ const newProcess = () => {
         <h1>Controle de Importação</h1>
         <p>Gerencie seus processos de importação de dados</p>
       </div>
-      <button class="btn btn-primary" @click="newProcess">+ Novo Processo</button>
+      <button class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center"
+        @click="newProcess">
+        +
+      </button>
     </div>
     <ImportProcess />
   </div>
@@ -26,6 +29,8 @@ const newProcess = () => {
 <style scoped>
 .home-container {
   padding: 2rem;
+  background: #eef5ff;
+  height: 100vh;
 }
 
 .title-section {
@@ -42,5 +47,9 @@ h1 {
 
 p {
   color: gray;
+}
+
+.btn {
+  font-weight: bold;
 }
 </style>
