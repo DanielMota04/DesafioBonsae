@@ -4,16 +4,21 @@ import papaparse from 'papaparse';
 import CsvTable from './CsvTable.vue';
 
 const props = defineProps({
-  requiredHeaders: {
-    type: Array,
-    required: true
-  }
+    requiredHeaders: {
+        type: Array,
+        required: true
+    }
 });
 
 const emits = defineEmits(['validCsv']);
 
 const csvData = ref([]);
 const jsonData = ref(null);
+
+const validateRows = (data, requiredHeaders) => {
+    const invalidRows = data.filter(row => requiredHeaders.some(header => !row[header] || row[header].trim() === ""));
+    return invalidRows.length > 0 ? { valid: false, invalidRows } : { valid: true };
+}
 
 
 const handleFileUpload = (ev) => {
@@ -22,20 +27,28 @@ const handleFileUpload = (ev) => {
         if (file.type === 'text/csv') {
             papaparse.parse(file, {
                 header: true,
+                skipEmptyLines: true,
                 complete: (results) => {
                     const headers = results.meta.fields;
                     const isHeaderValid = props.requiredHeaders.every(header => headers.includes(header));
 
-                    if(isHeaderValid){
-                        console.log("O header ta válido");
-                        csvData.value = results.data;
-                        jsonData.value = JSON.stringify(results.data);
-                        emits('validCsv', {valid: true, data: results.data})
-                    }else{
-                        console.log("Faltam headers");
-                        emits('validCsv', {valid: false, data: []})
-                    }
+                    if (isHeaderValid) {
+                        console.log("O header tá válido");
 
+                        const validation = validateRows(results.data, props.requiredHeaders);
+                        if (validation.valid) {
+                            csvData.value = results.data;
+                            jsonData.value = JSON.stringify(results.data);
+                            emits('validCsv', { valid: true, data: results.data });
+                        } else {
+                            console.log("Existem linhas inválidas");
+                            emits('validCsv', { valid: false, data: [] });
+                        }
+
+                    } else {
+                        console.log("Faltam headers");
+                        emits('validCsv', { valid: false, data: [] });
+                    }
 
                 },
                 error: (error) => {
@@ -61,7 +74,7 @@ const handleFileUpload = (ev) => {
     </label>
 
     <label class="data-table">
-        <CsvTable :csvData="csvData"/>
+        <CsvTable :csvData="csvData" />
     </label>
 
 </template>
