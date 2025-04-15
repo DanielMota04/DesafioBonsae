@@ -6,7 +6,7 @@ import ProcessHeader from "../components/ProcessHeader.vue";
 
 const router = useRouter();
 
-const requiredHeaders = ["Perfil*", "Nome*", "E-mail*", "Senha"]
+const requiredHeaders = ["Disciplina (código)","Código da turma","Professores(as) responsavel(eis) matricula ou e-mail"]
 
 const validCsv = ref(false);
 const csvData = ref([]);
@@ -17,11 +17,11 @@ const handleValidCsv = ({valid, data}) => {
 }
 
 const nextStep = () => {
-    if (!validCsv.value) {
+    if (!validCsv.value){
         alert("O csv não é válido");
         return
     }
-    router.push("/LinkTeacherToClass")
+    router.push("/LinkStudentToClass")
 }
 
 </script>
@@ -36,8 +36,8 @@ const nextStep = () => {
             </div>
 
             <div class="uploader-section">
-                <h3>Usuários</h3>
-                <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" />
+                <h3>Vínculo Professor-turma</h3>
+                <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv"/>
             </div>
 
             <button class="forward-btn" @click="nextStep">Avançar <i class="bi bi-arrow-right"></i></button>
