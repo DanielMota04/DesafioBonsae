@@ -1,30 +1,21 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import ImportProcessRow from './ImportProcessRow.vue';
+import { getImportProcesses } from '../services/importProcessService.js';
 
-const processes = [
-  {
-    ProcessID: "proc-01",
-    academicPeriod: "2024.1",
-    startDate: "01/02/2024 11:30",
-    endDate: "01/06/2024 10:45",
-    status: "Finalizado"
-  },
-  {
+const processes = ref([]);
 
-    ProcessID: "proc-02",
-    academicPeriod: "2024.2",
-    startDate: "01/07/2024 07:30",
-    endDate: "30/11/2024 16:10",
-    status: "Finalizado"
-  },
-  {
-    ProcessID: "proc-03",
-    academicPeriod: "2025.1",
-    startDate: "01/02/2025 12:40",
-    endDate: "",
-    status: "Em andamento"
+const loadProcesses = async () => {
+  try {
+    processes.value = await getImportProcesses();
+  } catch (error) {
+    console.error('Erro ao carregar processos: ', error);
   }
-]
+}
+
+onMounted(() => {
+  loadProcesses();
+})
 </script>
 
 <template>
