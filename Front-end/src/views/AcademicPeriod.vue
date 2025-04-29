@@ -1,37 +1,89 @@
 <script setup>
-import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import ProcessHeader from '../components/ProcessHeader.vue';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const academicPeriodInput = ref("");
+const currentStep = ref(0);
 
-const nextStep = () => {
-    // adicionar validação do período letivo
-    router.push("/disciplines")
+const steps = [
+  { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
+  { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
+  { numero: 3, nome: 'Turmas', path: '/classes' },
+  { numero: 4, nome: 'Usuários', path: '/users' },
+  { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
+  { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' },
+];
+
+const etapasCompletas = ref([false, false, false, false, false, false]);
+
+function avancar() {
+
+    if (academicPeriodInput.value.trim() === "") {
+    alert("Preencha o campo Período Letivo antes de continuar.");
+    return;
+  }
+
+  etapasCompletas.value[currentStep.value] = true;
+
+  if (currentStep.value < steps.length - 1) {
+    currentStep.value++;
+    router.push(steps[currentStep.value].path);
+  }
 }
 
-const academicPeriodInput = ref("");
+function selectStep(index) {
+
+    if (index > currentStep.value && !etapasCompletas.value[currentStep.value]) {
+    alert("Você precisa completar a etapa atual primeiro!");
+    return;
+  }
+
+  currentStep.value = index;
+  router.push(steps[index].path);
+}
+
+function voltarPagina() {
+  router.push('/');
+}
 
 </script>
 
 <template>
-    <div class="home-container">
-        <div class="title-section">
-            <ProcessHeader/>
+    <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="voltarPagina" />
 
-            <div class="steps">
-                <!-- Aqui vao estar aquelas bolinhas de etapas-->
+    <div class="page-layout">
+        <div class="stepper-container">
+            <div v-for="(step, index) in steps" :key="index" class="step-wrapper">
+                <button class="step-circle"
+                    :class="{ active: currentStep === index, esquerda: index % 2 === 0, direita: index % 2 !== 0 }"
+                    @click="selectStep(index)">
+                    <div class="step-number" :class="{ 'text-active': currentStep === index }">{{ step.numero }}</div>
+                    <div class="step-name" :class="{ 'text-active': currentStep === index }">{{ step.nome }}</div>
+                </button>
+            </div>
+        </div>
+
+        <div class="content-center">
+            <div class="logo-container">
+                <img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" class="logo-bonsae" />
             </div>
 
-            <div class="form-section">
-                <label for="period">Período Letivo</label>
-                <input v-model="academicPeriodInput" type="text" id="period" placeholder="Ex: 2023/2" />
-                <button class="forward-btn" @click="nextStep">Avançar <i class="bi bi-arrow-right"></i></button>
+            <div class="form-container">
+                <label class="input-label" for="periodoLetivo">Período Letivo</label>
+                <div class="input-button-wrapper">
+                    <input v-model="academicPeriodInput" type="text" id="periodoLetivo" placeholder="Ex: 2023/2"
+                        class="input-periodo" />
+                    <button class="forward-btn" @click="avancar">
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
             </div>
-
         </div>
     </div>
 </template>
+
+
 
 <style scoped>
 .home-container {
@@ -62,5 +114,184 @@ input {
     margin-top: 1rem;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.rounded-circle {
+    transition: background-color 0.3s ease;
+}
+
+.page-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+
+.stepper-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 60px;
+    margin: 12px 0 0 0;
+}
+
+
+.step-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+
+.step-wrapper:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 130%;
+    height: 41px;
+    border: 15px solid #1161D8;
+    border-top: none;
+    border-right: none;
+    transform: translateX(-50%) rotate(45deg) scaleY(0);
+}
+
+
+/* CURVA PAR É DA ESQUERDA, AQ!!!!! */
+.step-wrapper:nth-child(even)::after {
+    top: 91%;
+    width: 5rem;
+    left: 5%;
+    transform: translateX(20%) rotate(47deg);
+    border-radius: 0rem 0 0 100rem;
+}
+
+/* E CURVA IMPAR É DA DIREITAAAAA!! */
+.step-wrapper:nth-child(odd)::after {
+    top: 88%;
+    width: 5rem;
+    left: 24%;
+    transform: translateX(60%) rotate(220deg);
+    border-radius: 5px 0 0 160px;
+}
+
+.step-circle {
+    margin-bottom: 10px;
+    width: 120px;
+    height: 122px;
+    border-radius: 50%;
+    background-color: #1161D8;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.step-circle.active {
+    background-color: #8FBAFA;
+}
+
+.step-circle.esquerda {
+    margin-right: 40px;
+}
+
+.step-circle.direita {
+    margin-left: 40px;
+}
+
+.step-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.step-name {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: 500;
+    white-space: pre-line;
+}
+
+.text-active {
+    color: #0C479D;
+}
+
+.btn-voltar {
+    width: 50px;
+    height: 40px;
+    cursor: pointer;
+    margin: 1.3rem;
+    margin-left: 6rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-voltar:hover {
+    transform: scale(1.1);
+}
+
+
+.content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0.9;
+    min-height: 80vh;
+}
+
+.logo-container {
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+
+.logo-bonsae {
+    width: 489px;
+    max-width: 90%;
+    height: auto;
+
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 300px;
+}
+
+.input-button-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-periodo {
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.forward-btn {
+    background: #1161D8;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-left: 8px;
+    margin-bottom: 20px;
+    border-radius: 60%;
+    width: 70px;
+  
+}
+
+.forward-btn:hover {
+    background-color: #007bff;
 }
 </style>
