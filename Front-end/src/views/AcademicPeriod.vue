@@ -4,47 +4,50 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const academicPeriodInput = ref("");
+const startDateInput = ref("");
+const endDateInput = ref("");
+
 const currentStep = ref(0);
 
 const steps = [
-  { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
-  { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
-  { numero: 3, nome: 'Turmas', path: '/classes' },
-  { numero: 4, nome: 'Usuários', path: '/users' },
-  { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
-  { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' },
+    { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
+    { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
+    { numero: 3, nome: 'Turmas', path: '/classes' },
+    { numero: 4, nome: 'Usuários', path: '/users' },
+    { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
+    { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' },
 ];
 
 const etapasCompletas = ref([false, false, false, false, false, false]);
 
 function avancar() {
 
-    if (academicPeriodInput.value.trim() === "") {
-    alert("Preencha o campo Período Letivo antes de continuar.");
-    return;
-  }
+    if (academicPeriodInput.value.trim() === "" && startDateInput.value.trim() === "" && endDateInput.value.trim() === "") {
+        alert("Preencha todos os campos antes de continuar.");
+        return;
+    }
 
-  etapasCompletas.value[currentStep.value] = true;
+    etapasCompletas.value[currentStep.value] = true;
 
-  if (currentStep.value < steps.length - 1) {
-    currentStep.value++;
-    router.push(steps[currentStep.value].path);
-  }
+    if (currentStep.value < steps.length - 1) {
+        currentStep.value++;
+        router.push(steps[currentStep.value].path);
+    }
 }
 
 function selectStep(index) {
 
     if (index > currentStep.value && !etapasCompletas.value[currentStep.value]) {
-    alert("Você precisa completar a etapa atual primeiro!");
-    return;
-  }
+        alert("Você precisa completar a etapa atual primeiro!");
+        return;
+    }
 
-  currentStep.value = index;
-  router.push(steps[index].path);
+    currentStep.value = index;
+    router.push(steps[index].path);
 }
 
 function voltarPagina() {
-  router.push('/');
+    router.push('/');
 }
 
 </script>
@@ -72,8 +75,18 @@ function voltarPagina() {
             <div class="form-container">
                 <label class="input-label" for="periodoLetivo">Período Letivo</label>
                 <div class="input-button-wrapper">
-                    <input v-model="academicPeriodInput" type="text" id="periodoLetivo" placeholder="Ex: 2023/2"
+                    <label for="periodoLetivo">Período letivo</label>
+                    <input v-model="academicPeriodInput" type="text" id="periodoLetivo" placeholder="Ex: 2023/1"
                         class="input-periodo" />
+
+                    <label for="startDate">Data inicial</label>
+                    <input v-model="startDateInput" type="text" id="startDate" placeholder="Ex: 01/02/2023"
+                        class="input-periodo" />
+
+                    <label for="endDate">Data final</label>
+                    <input v-model="endDateInput" type="text" id="endDate" placeholder="Ex: 01/07/2023"
+                        class="input-periodo" />
+
                     <button class="forward-btn" @click="avancar">
                         <i class="bi bi-arrow-right"></i>
                     </button>
@@ -288,7 +301,7 @@ input {
     margin-bottom: 20px;
     border-radius: 60%;
     width: 70px;
-  
+
 }
 
 .forward-btn:hover {
