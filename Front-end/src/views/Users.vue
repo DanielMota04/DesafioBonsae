@@ -59,7 +59,7 @@ function selectStep(index) {
 }
 
 function finalizarImportacao() {
-  router.push('/classes'); 
+  router.push('/LinkTeacherToClass'); 
 }
 
 
