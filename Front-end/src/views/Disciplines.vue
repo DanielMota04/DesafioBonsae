@@ -1,122 +1,211 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import CsvUploader from "../components/CsvUploader.vue";
-import ProcessHeader from "../components/ProcessHeader.vue";
+import Papa from 'papaparse';
+import CsvTable from '../components/CsvTable.vue';
 
 const router = useRouter();
 
-const requiredHeaders = ["Período Letivo (Identificação)", "Código da Disciplina*", "Data Inicial", "Data Final", "Categoria"]
-
-const validCsv = ref(false);
 const csvData = ref([]);
+const csvLoaded = ref(false);
 
-const handleValidCsv = ({ valid, data }) => {
-    validCsv.value = valid;
-    csvData.value = data
+const requiredHeaders = [
+  "Período Letivo (Identificação)",
+  "Código da Disciplina*",
+  "Data Inicial",
+  "Data Final",
+  "Categoria"
+];
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        const headers = results.meta.fields;
+        const isValid = requiredHeaders.every(header => headers.includes(header));
+
+        if (!isValid) {
+          alert("O arquivo CSV está faltando colunas obrigatórias.");
+          return;
+        }
+
+        csvData.value = results.data;
+        csvLoaded.value = true;
+      }
+    });
+  }
 }
 
-const nextStep = () => {
-    if (!validCsv.value) {
-        alert("O csv não é válido");
-        return
-    }
-    router.push("/classes")
+const currentStep = ref(1);
+const steps = [
+  { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
+  { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
+  { numero: 3, nome: 'Turmas', path: '/classes' },
+  { numero: 4, nome: 'Usuários', path: '/users' },
+  { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
+  { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' }
+];
+const etapasCompletas = ref([true, false, false, false, false, false]);
+
+function selectStep(index) {
+  if (index > currentStep.value && !etapasCompletas.value[currentStep.value]) {
+    alert("Você precisa completar a etapa atual primeiro!");
+    return;
+  }
+  currentStep.value = index;
+  router.push(steps[index].path);
 }
 
+function voltarPagina() {
+  router.push('/');
+}
 </script>
 
+
+
 <template>
-    <div class="home-container">
-        <div class="title-section">
-            <ProcessHeader />
-
-            <div class="steps">
-                <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="voltarPagina" />
-
-                <div class="page-layout">
-                    <div class="stepper-container">
-                        <div v-for="(step, index) in steps" :key="index" class="step-wrapper">
-                            <button class="step-circle"
-                                :class="{ active: currentStep === index, esquerda: index % 2 === 0, direita: index % 2 !== 0 }"
-                                @click="selectStep(index)">
-                                <div class="step-number" :class="{ 'text-active': currentStep === index }">{{
-                                    step.numero }}</div>
-                                <div class="step-name" :class="{ 'text-active': currentStep === index }">{{ step.nome }}
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-
-        
-                </div>
-            </div>
-
-            <div class="uploader-section">
-                <h3>Disciplinas</h3>
-                <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" />
-            </div>
-
-            <button class="forward-btn" @click="nextStep">Avançar <i class="bi bi-arrow-right"></i></button>
-
+    <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="voltarPagina" />
+  
+    <div class="page-layout">
+      <!-- Stepper lateral -->
+      <div class="stepper-container">
+        <div v-for="(step, index) in steps" :key="index" class="step-wrapper">
+          <button class="step-circle"
+            :class="{ active: currentStep === index, esquerda: index % 2 === 0, direita: index % 2 !== 0 }"
+            @click="selectStep(index)">
+            <div class="step-number" :class="{ 'text-active': currentStep === index }">{{ step.numero }}</div>
+            <div class="step-name" :class="{ 'text-active': currentStep === index }">{{ step.nome }}</div>
+          </button>
         </div>
+      </div>
+  
+      <!-- Conteúdo central -->
+      <div class="content-center">
+        <div class="logo-wrapper" :class="{ 'logo-small': csvLoaded }">
+  <img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" />
+</div>
+
+  
+        <div v-if="!csvLoaded" class="upload-area">
+          <label class="custom-upload">
+            Escolha um arquivo CSV
+            <input type="file" accept=".csv" @change="handleFileUpload" />
+          </label>
+        </div>
+  
+        <div v-else class="table-wrapper">
+          <CsvTable :data="csvData" />
+        </div>
+      </div>
     </div>
-</template>
-
-<style scoped>
-.home-container {
-    padding: 2rem;
-}
-
-.title-section {
-    margin-bottom: 1.5rem;
-}
-
-.uploader-section {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.forward-btn {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 0.7rem;
-    margin-top: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.page-layout {
+  </template>
+  
+  <style scoped>
+  .page-layout {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+  }
+  
+  .content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0.9;
+    min-height: 80vh;
+  }
+  
+  .logo-container {
+    margin-bottom: 30px;
+    transition: all 0.5s ease;
+  }
+  
+  .logo-top {
+    align-self: flex-start;
+    margin-left: 40px;
+    margin-bottom: 10px;
+    transform: translateY(-20px);
+  }
+  
+  .logo-bonsae {
+    width: 489px;
+    max-width: 90%;
+    height: auto;
+  }
+  
+  .logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin-bottom: 30px;
+}
+
+.logo-wrapper img {
+  width: 300px;
+  transition: all 0.5s ease;
+}
+
+.logo-small {
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.logo-small img {
+  width: 180px;
 }
 
 
-.stepper-container {
+  .upload-area {
+    margin-top: 40px;
+  }
+  
+  .custom-upload {
+    background-color: white;
+    border: 2px solid #007bff;
+    color: #011738;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-upload:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .custom-upload input[type="file"] {
+    display: none;
+  }
+  
+  .table-wrapper {
+    width: 90%;
+    margin-top: 20px;
+  }
+  
+  /* Stepper */
+  .stepper-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 60px;
     margin: 12px 0 0 0;
-}
-
-
-.step-wrapper {
+  }
+  
+  .step-wrapper {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    display: flex;
-    flex-direction: column;
-
-}
-
-
-
-.step-wrapper:not(:last-child)::after {
+  }
+  
+  .step-wrapper:not(:last-child)::after {
     content: "";
     position: absolute;
     top: 130%;
@@ -125,28 +214,25 @@ const nextStep = () => {
     border-top: none;
     border-right: none;
     transform: translateX(-50%) rotate(45deg) scaleY(0);
-}
-
-
-/* CURVA PAR É DA ESQUERDA, AQ!!!!! */
-.step-wrapper:nth-child(even)::after {
+  }
+  
+  .step-wrapper:nth-child(even)::after {
     top: 91%;
     width: 5rem;
     left: 5%;
     transform: translateX(20%) rotate(47deg);
     border-radius: 0rem 0 0 100rem;
-}
-
-/* E CURVA IMPAR É DA DIREITAAAAA!! */
-.step-wrapper:nth-child(odd)::after {
+  }
+  
+  .step-wrapper:nth-child(odd)::after {
     top: 88%;
     width: 5rem;
     left: 24%;
     transform: translateX(60%) rotate(220deg);
     border-radius: 5px 0 0 160px;
-}
-
-.step-circle {
+  }
+  
+  .step-circle {
     margin-bottom: 10px;
     width: 120px;
     height: 122px;
@@ -160,106 +246,47 @@ const nextStep = () => {
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease-in-out;
-}
-
-.step-circle.active {
+  }
+  
+  .step-circle.active {
     background-color: #8FBAFA;
-}
-
-.step-circle.esquerda {
+  }
+  
+  .step-circle.esquerda {
     margin-right: 40px;
-}
-
-.step-circle.direita {
+  }
+  
+  .step-circle.direita {
     margin-left: 40px;
-}
-
-.step-number {
+  }
+  
+  .step-number {
     font-size: 1.5rem;
     font-weight: bold;
-}
-
-.step-name {
+  }
+  
+  .step-name {
     font-size: 0.8rem;
     margin-top: 5px;
     text-align: center;
     font-weight: 500;
     white-space: pre-line;
-}
-
-.text-active {
+  }
+  
+  .text-active {
     color: #0C479D;
-}
-
-.btn-voltar {
+  }
+  
+  .btn-voltar {
     width: 50px;
     height: 40px;
     cursor: pointer;
     margin: 1.3rem;
     margin-left: 6rem;
     transition: transform 0.2s ease-in-out;
-}
-
-.btn-voltar:hover {
+  }
+  
+  .btn-voltar:hover {
     transform: scale(1.1);
-}
-
-
-.content-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 0.9;
-    min-height: 80vh;
-}
-
-.logo-container {
-    margin-bottom: 30px;
-    margin-top: 0;
-}
-
-.logo-bonsae {
-    width: 489px;
-    max-width: 90%;
-    height: auto;
-
-}
-
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 300px;
-}
-
-.input-button-wrapper {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-.input-periodo {
-    padding: 10px 15px;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 100%;
-}
-
-.forward-btn {
-    background: #1161D8;
-    border: none;
-    font-size: 24px;
-    color: #ffffff;
-    cursor: pointer;
-    margin-left: 8px;
-    margin-bottom: 20px;
-    border-radius: 60%;
-    width: 70px;
-
-}
-
-.forward-btn:hover {
-    background-color: #007bff;
-}
-</style>
+  }
+  </style>
