@@ -37,7 +37,7 @@ function handleFileUpload(event) {
   }
 }
 
-const currentStep = ref(1);
+const currentStep = ref(4);
 const steps = [
   { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
   { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
