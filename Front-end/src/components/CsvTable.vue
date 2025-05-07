@@ -4,7 +4,7 @@ import { ref, computed } from 'vue';
 const props = defineProps(['data']);
 
 const currentPage = ref(1);
-const itemsPerPage = 10;
+const itemsPerPage = 9;
 
 const totalPages = computed(() =>
   Math.ceil(props.data.length / itemsPerPage)

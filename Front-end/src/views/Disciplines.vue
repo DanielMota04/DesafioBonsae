@@ -59,8 +59,13 @@ function selectStep(index) {
   router.push(steps[index].path);
 }
 
+function finalizarImportacao() {
+  router.push('/classes'); 
+}
+
+
 function voltarPagina() {
-  router.push('/');
+  router.back();
 }
 </script>
 
@@ -97,8 +102,15 @@ function voltarPagina() {
         </div>
   
         <div v-else class="table-wrapper">
-          <CsvTable :data="csvData" />
-        </div>
+  <CsvTable :data="csvData" />
+
+  <div class="final-button-wrapper">
+    <button class="btn-finalizar" @click="finalizarImportacao">
+      Finalizar Importação
+    </button>
+  </div>
+</div>
+
       </div>
     </div>
   </template>
@@ -289,4 +301,33 @@ function voltarPagina() {
   .btn-voltar:hover {
     transform: scale(1.1);
   }
+
+  .import-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.final-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.btn-finalizar {
+  background-color: #1161D8;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.btn-finalizar:hover {
+  background-color: #0d4ab8;
+}
+
   </style>
