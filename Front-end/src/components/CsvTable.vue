@@ -70,15 +70,35 @@ h3 {
 
 }
 
-.table-container {
-  margin-top: 1rem;
-}
 
 table {
+  min-width: 1000px;
   width: 100%;
   border: 2px solid #E5F0FB;
   border-collapse: collapse;
 }
+
+.table-container {
+  margin-top: 1rem;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: thin; 
+  scrollbar-color: #1161d8 transparent; 
+}
+
+.table-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #1161d8;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 
 thead {
   background: #E5F0FB;
@@ -115,4 +135,16 @@ td {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
