@@ -284,12 +284,18 @@ input {
 }
 
 .input-periodo {
-    padding: 10px 15px;
+    padding: 14px 20px;
     border: 1px solid #007bff;
     border-radius: 5px;
     font-size: 16px;
-    width: 100%;
+    width: 220px;
+    
 }
+
+.input-button-wrapper input:not(:last-of-type) {
+    margin-right: 12px;
+}
+
 
 .forward-btn {
     background: #1161D8;
