@@ -1,11 +1,34 @@
 <script setup>
 import { computed } from 'vue';
-const props = defineProps(["ProcessID", "academicPeriod", "startDate", "endDate", "status"])
+import { useRouter} from 'vue-router';
+const props = defineProps(["ProcessID", "academicPeriod", "startDate", "endDate", "status", "currentStep"])
+
+const router = useRouter();
+
+const stepRoutes = {
+  1: "/academicPeriod",
+  2: "/disciplines",
+  3: "/classes",
+  4: "/users",
+  5: "/LinkTeacherToClass",
+  6: "/LinkStudentToClass",
+};
 
 const statusClass = computed(() => {
     return props.status === "Em andamento" ? "in-progress" :
            props.status === "Finalizado" ? "completed" : "";
 });
+
+function continueProcess(currentStep) {
+  const nextStep = currentStep + 1;
+  const nextRoute = stepRoutes[nextStep];
+
+  if (nextRoute) {
+    router.push(nextRoute);
+  } else {
+    console.warn("Etapa inválida ou processo já finalizado.");
+  }
+}
 
 </script>
 
@@ -18,7 +41,7 @@ const statusClass = computed(() => {
         <td><span class="status " :class="statusClass" >{{ status }}</span></td>
         <td v-if="props.status === 'Em andamento'">
             <button class="btn btn-danger">Abortar</button>
-            <button class="btn btn-primary">Continuar</button>
+            <button class="btn btn-primary" @click="continueProcess(currentStep)">Continuar</button>
         </td>
         <td v-if="props.status === 'Finalizado'">
             <button class="btn btn-secondary">Visualizar →</button>

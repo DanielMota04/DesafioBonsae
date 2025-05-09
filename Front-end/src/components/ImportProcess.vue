@@ -37,7 +37,7 @@ onMounted(() => {
         <tbody>
           <ImportProcessRow v-for="process in processes" :key="process.ProcessID" :ProcessID="process.ProcessID"
             :academicPeriod="process.academicPeriod" :startDate="process.startDate" :endDate="process.endDate"
-            :status="process.status" />
+            :status="process.status" :currentStep="process.currentStep"/>
         </tbody>
       </table>
     </div>
