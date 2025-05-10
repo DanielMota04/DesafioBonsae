@@ -1,13 +1,14 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import Papa from 'papaparse';
+import CsvUploader from '../components/CsvUploader.vue'
 import CsvTable from '../components/CsvTable.vue';
 
 const router = useRouter();
 
 const csvData = ref([]);
 const csvLoaded = ref(false);
+const validCsv = ref(false);
 
 const requiredHeaders = [
   "Disciplina (código)",
@@ -15,26 +16,10 @@ const requiredHeaders = [
   "Professores(as) responsavel(eis) matricula ou e-mail"
 ];
 
-function handleFileUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        const headers = results.meta.fields;
-        const isValid = requiredHeaders.every(header => headers.includes(header));
-
-        if (!isValid) {
-          alert("O arquivo CSV está faltando colunas obrigatórias.");
-          return;
-        }
-
-        csvData.value = results.data;
-        csvLoaded.value = true;
-      }
-    });
-  }
+const handleValidCsv = ({ valid, data }) => {
+  validCsv.value = valid;
+  csvData.value = data
+  csvLoaded.value = true
 }
 
 const currentStep = ref(4);
@@ -58,7 +43,7 @@ function selectStep(index) {
 }
 
 function finalizarImportacao() {
-  router.push('/LinkStudentToClass'); 
+  router.push('/LinkStudentToClass');
 }
 
 function voltarPagina() {
@@ -67,8 +52,8 @@ function voltarPagina() {
 </script>
 
 <template>
-    <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="voltarPagina" />
-  
+  <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="voltarPagina" />
+
   <div class="page-layout">
     <!-- Stepper lateral -->
     <div class="stepper-container">
@@ -85,26 +70,23 @@ function voltarPagina() {
     <!-- Conteúdo central -->
     <div class="content-center">
       <div class="logo-wrapper" :class="{ 'logo-small': csvLoaded }">
-<img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" />
-</div>
+        <img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" />
+      </div>
 
 
       <div v-if="!csvLoaded" class="upload-area">
-        <label class="custom-upload">
-          Escolha um arquivo CSV
-          <input type="file" accept=".csv" @change="handleFileUpload" />
-        </label>
+        <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" @csvLoaded="csvLoaded = true" />
       </div>
 
       <div v-else class="table-wrapper">
-<CsvTable :data="csvData" />
+        <CsvTable :data="csvData" />
 
-<div class="final-button-wrapper">
-  <button class="btn-finalizar" @click="finalizarImportacao">
-    Finalizar Importação
-  </button>
-</div>
-</div>
+        <div class="final-button-wrapper">
+          <button class="btn-finalizar" @click="finalizarImportacao">
+            Finalizar Importação
+          </button>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -144,26 +126,26 @@ function voltarPagina() {
 }
 
 .logo-wrapper {
-display: flex;
-justify-content: center;
-align-items: center;
-transition: all 0.5s ease;
-margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  margin-bottom: 30px;
 }
 
 .logo-wrapper img {
-width: 300px;
-transition: all 0.5s ease;
+  width: 300px;
+  transition: all 0.5s ease;
 }
 
 .logo-small {
-justify-content: center;
-margin-top: 20px;
-margin-bottom: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .logo-small img {
-width: 180px;
+  width: 180px;
 }
 
 
@@ -298,30 +280,30 @@ width: 180px;
 }
 
 .import-title {
-font-family: 'Nunito', sans-serif;
-font-size: 1.4rem;
-font-weight: 700;
-margin-bottom: 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 .final-button-wrapper {
-display: flex;
-justify-content: flex-end;
-margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
 }
 
 .btn-finalizar {
-background-color: #1161D8;
-color: white;
-border: none;
-padding: 10px 22px;
-border-radius: 6px;
-font-weight: 600;
-cursor: pointer;
-transition: background-color 0.2s ease-in-out;
+  background-color: #1161D8;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .btn-finalizar:hover {
-background-color: #0d4ab8;
+  background-color: #0d4ab8;
 }
 </style>
