@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import papaparse from 'papaparse';
-import CsvTable from './CsvTable.vue';
 
 const props = defineProps({
     requiredHeaders: {
@@ -39,7 +38,7 @@ const handleFileUpload = (ev) => {
                         if (validation.valid) {
                             csvData.value = results.data;
                             jsonData.value = JSON.stringify(results.data);
-                            emits('validCsv', { valid: true, data: results.data });
+                            emits('validCsv', { valid: true, data: results.data, isLoaded: true });
                         } else {
                             console.log("Existem linhas inválidas");
                             emits('validCsv', { valid: false, data: [] });
@@ -63,64 +62,35 @@ const handleFileUpload = (ev) => {
 </script>
 
 <template>
-
-    <img src="/group-6.png" alt="Decor Left" class="decor-left" />
-    <img src="/logo.png" alt="Logo Bonsae" class="logo" />
-
-    <label class="file-button">
+    <label class="custom-upload">
         Escolha um arquivo CSV
-        <input type="file" accept=".csv" @change="handleFileUpload" hidden />
-
+        <input type="file" accept=".csv" @change="handleFileUpload" />
     </label>
-
-    <label class="data-table">
-        <CsvTable :csvData="csvData" />
-    </label>
-
 </template>
 
 <style scoped>
-.file-button {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    position: relative;
-    bottom: 25rem;
-    left: 30rem;
-    margin: 0;
-    width: 190px;
-    display: inline-block;
-    text-align: center;
-    border: 2px solid #139AFE;
-    border-radius: 25px;
-    padding: 10px 20px;
-    cursor: pointer;
-    color: #011738;
-    background-color: none;
+.upload-area {
+  margin-top: 40px;
 }
 
-.data-table {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin: 0;
-    display: inline-block;
-    text-align: center;
-    border: 2px solid #000;
-    border-radius: 25px;
-    padding: 10px 20px;
-    color: #011738;
-    background-color: none;
+.custom-upload {
+  background-color: white;
+  border: 2px solid #007bff;
+  color: #011738;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-
-.decor-left {
-    height: 44rem;
-    margin: 0;
-    width: 15rem;
+.custom-upload:hover {
+  background-color: #007bff;
+  color: white;
 }
 
-.logo {
-    width: 350px;
-    height: 125px;
-    position: absolute;
-    left: 39rem;
-    top: 5rem;
+.custom-upload input[type="file"] {
+  display: none;
 }
+
 </style>
