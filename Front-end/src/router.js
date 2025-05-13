@@ -8,13 +8,13 @@ import LinkTeacherToClass from "./views/LinkTeacherToClass.vue";
 import LinkStudentToClass from "./views/LinkStudentToClass.vue";
 
 const routes = [
-  { path: "/", component: Home },
-  { path: "/academicPeriod", component: AcademicPeriod },
-  { path: "/disciplines", component: Disciplines },
-  { path: "/classes", component: Classes },
-  { path: "/users", component: Users },
-  { path: "/LinkTeacherToClass", component: LinkTeacherToClass },
-  { path: "/LinkStudentToClass", component: LinkStudentToClass },
+  { path: "/", component: Home, props: true},
+  { path: "/academicPeriod/:id", component: AcademicPeriod, props: true },
+  { path: "/disciplines/:id", component: Disciplines, props: true },
+  { path: "/classes/:id", component: Classes, props: true },
+  { path: "/users/:id", component: Users, props: true },
+  { path: "/LinkTeacherToClass/:id", component: LinkTeacherToClass, props: true },
+  { path: "/LinkStudentToClass/:id", component: LinkStudentToClass, props: true },
 ];
 
 const router = createRouter({

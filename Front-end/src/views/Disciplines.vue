@@ -1,14 +1,17 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
 
 const router = useRouter();
+const route = useRoute();
 
 const csvData = ref([]);
 const csvLoaded = ref(false);
 const validCsv = ref(false);
+
+const id = route.params.id;
 
 const requiredHeaders = [
   "Período Letivo (Identificação)",
@@ -27,12 +30,12 @@ const handleValidCsv = ({ valid, data, isLoaded }) => {
 
 const currentStep = ref(1);
 const steps = [
-  { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
-  { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
-  { numero: 3, nome: 'Turmas', path: '/classes' },
-  { numero: 4, nome: 'Usuários', path: '/users' },
-  { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
-  { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' }
+  { numero: 1, nome: 'Período Letivo', path: `/academicPeriod/${id}` },
+  { numero: 2, nome: 'Disciplinas', path: `/disciplines/${id}` },
+  { numero: 3, nome: 'Turmas', path: `/classes/${id}` },
+  { numero: 4, nome: 'Usuários', path: `/users/${id}` },
+  { numero: 5, nome: 'Professor/Turma', path: `/LinkTeacherToClass/${id}` },
+  { numero: 6, nome: 'Aluno/Turma', path: `/LinkStudentToClass/${id}` },
 ];
 const etapasCompletas = ref([true, false, false, false, false, false]);
 
@@ -46,7 +49,8 @@ function selectStep(index) {
 }
 
 function finalizarImportacao() {
-  router.push('/classes');
+  currentStep.value++;
+  router.push(steps[currentStep.value].path);
 }
 
 
@@ -81,7 +85,7 @@ function voltarPagina() {
 
 
       <div v-if="!csvLoaded" class="upload-area">
-        <CsvUploader  :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" @csvLoaded="csvLoaded = true"/>
+        <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" @csvLoaded="csvLoaded = true" />
       </div>
 
       <div v-else class="table-wrapper">

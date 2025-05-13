@@ -1,21 +1,23 @@
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 const academicPeriodInput = ref("");
 const startDateInput = ref("");
 const endDateInput = ref("");
+const id = route.params.id;
 
 const currentStep = ref(0);
 
 const steps = [
-    { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
-    { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
-    { numero: 3, nome: 'Turmas', path: '/classes' },
-    { numero: 4, nome: 'Usuários', path: '/users' },
-    { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
-    { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' },
+    { numero: 1, nome: 'Período Letivo', path: `/academicPeriod/${id}` },
+    { numero: 2, nome: 'Disciplinas', path: `/disciplines/${id}` },
+    { numero: 3, nome: 'Turmas', path: `/classes/${id}` },
+    { numero: 4, nome: 'Usuários', path: `/users/${id}` },
+    { numero: 5, nome: 'Professor/Turma', path: `/LinkTeacherToClass/${id}` },
+    { numero: 6, nome: 'Aluno/Turma', path: `/LinkStudentToClass/${id}` },
 ];
 
 const etapasCompletas = ref([false, false, false, false, false, false]);
