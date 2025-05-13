@@ -19,12 +19,12 @@ const statusClass = computed(() => {
            props.status === "Finalizado" ? "completed" : "";
 });
 
-function continueProcess(currentStep) {
+function continueProcess(currentStep, ProcessID) {
   const nextStep = currentStep + 1;
   const nextRoute = stepRoutes[nextStep];
 
   if (nextRoute) {
-    router.push(nextRoute);
+    router.push(`${nextRoute}/${ProcessID}`);
   } else {
     console.warn("Etapa inválida ou processo já finalizado.");
   }
@@ -41,7 +41,7 @@ function continueProcess(currentStep) {
         <td><span class="status " :class="statusClass" >{{ status }}</span></td>
         <td v-if="props.status === 'Em andamento'">
             <button class="btn btn-danger">Abortar</button>
-            <button class="btn btn-primary" @click="continueProcess(currentStep)">Continuar</button>
+            <button class="btn btn-primary" @click="continueProcess(currentStep, ProcessID)">Continuar</button>
         </td>
         <td v-if="props.status === 'Finalizado'">
             <button class="btn btn-secondary">Visualizar →</button>

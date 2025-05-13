@@ -1,11 +1,13 @@
 <script setup>
 import ImportProcess from '../components/ImportProcess.vue';
 import { useRouter } from 'vue-router';
+import { v4 as uuidv4 } from 'uuid';
 
 const router = useRouter();
 
 const newProcess = () => {
-  router.push("/academicPeriod")
+  const newID = uuidv4();
+  router.push(`/academicPeriod/${newID}`)
 }
 
 </script>

@@ -1,14 +1,17 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
 import CsvUploader from '../components/CsvUploader.vue'
 import CsvTable from '../components/CsvTable.vue';
 
 const router = useRouter();
+const route = useRoute();
 
 const csvData = ref([]);
 const csvLoaded = ref(false);
 const validCsv = ref(false);
+
+const id = route.params.id;
 
 const requiredHeaders = [
   "Disciplina (código)",
@@ -24,12 +27,12 @@ const handleValidCsv = ({ valid, data }) => {
 
 const currentStep = ref(4);
 const steps = [
-  { numero: 1, nome: 'Período Letivo', path: '/academicPeriod' },
-  { numero: 2, nome: 'Disciplinas', path: '/disciplines' },
-  { numero: 3, nome: 'Turmas', path: '/classes' },
-  { numero: 4, nome: 'Usuários', path: '/users' },
-  { numero: 5, nome: 'Professor/Turma', path: '/LinkTeacherToClass' },
-  { numero: 6, nome: 'Aluno/Turma', path: '/LinkStudentToClass' }
+  { numero: 1, nome: 'Período Letivo', path: `/academicPeriod/${id}` },
+  { numero: 2, nome: 'Disciplinas', path: `/disciplines/${id}` },
+  { numero: 3, nome: 'Turmas', path: `/classes/${id}` },
+  { numero: 4, nome: 'Usuários', path: `/users/${id}` },
+  { numero: 5, nome: 'Professor/Turma', path: `/LinkTeacherToClass/${id}` },
+  { numero: 6, nome: 'Aluno/Turma', path: `/LinkStudentToClass/${id}` },
 ];
 const etapasCompletas = ref([true, false, false, false, false, false]);
 
@@ -43,7 +46,8 @@ function selectStep(index) {
 }
 
 function finalizarImportacao() {
-  router.push('/LinkStudentToClass');
+  currentStep.value++;
+  router.push(steps[currentStep.value].path);
 }
 
 function voltarPagina() {
