@@ -1,7 +1,7 @@
-Perfil*,Subperfil,Nome*,Nº da OAB,Seccional (UF OAB),E-mail*,MatrÍcula (IES),Telefone,CPF,Senha,Período Curricular,Observações
-Aluno,,João Silva,,,joao.silva@email.com,,(79) 99999-9999,123.456.789-00,senha123,,
+Perfil*,Subperfil,Nome*,NÂº da OAB,Seccional (UF OAB),E-mail*,MatrÃ­cula (IES),Telefone,CPF,Senha,PerÃ­odo Curricular,ObservaÃ§Ãµes
+Aluno,,JoÃ£o Silva,,,joao.silva@email.com,,(79) 99999-9999,123.456.789-00,senha123,,
 Professor,,Maria Oliveira,,,maria.oliveira@email.com,,(79) 98888-8888,987.654.321-00,senha456,,
-Aluno,,José Santos,,,jose.santos@email.com,,(79) 97777-7777,112.233.445-00,senha789,,
+Aluno,,JosÃ© Santos,,,jose.santos@email.com,,(79) 97777-7777,112.233.445-00,senha789,,
 Aluno,,Ana Costa,,,ana.costa@email.com,,(79) 96666-6666,556.677.889-00,senha321,,
 Professor,,Roberto Lima,,,roberto.lima@email.com,,(79) 95555-5555,223.344.556-00,senha654,,
 Aluno,,Beatriz Souza,,,beatriz.souza@email.com,,(79) 94444-4444,778.899.112-00,senha987,,
@@ -11,7 +11,7 @@ Professor,,Fernanda Almeida,,,fernanda.almeida@email.com,,(79) 91111-1111,445.56
 Aluno,,Luana Pereira,,,luana.pereira@email.com,,(79) 94444-4444,334.455.667-00,senha123,,
 Professor,,Paulo Silva,,,paulo.silva@email.com,,(79) 95555-5555,889.900.112-00,senha456,,
 Aluno,,Marcos Rocha,,,marcos.rocha@email.com,,(79) 92222-2222,223.344.556-00,senha789,,
-Professor,,Cláudia Gomes,,,claudia.gomes@email.com,,(79) 96666-6666,667.788.223-00,senha321,,
+Professor,,ClÃ¡udia Gomes,,,claudia.gomes@email.com,,(79) 96666-6666,667.788.223-00,senha321,,
 Aluno,,Larissa Lima,,,larissa.lima@email.com,,(79) 97777-7777,556.677.889-00,senha654,,
 Professor,,Gustavo Costa,,,gustavo.costa@email.com,,(79) 99999-9999,778.899.112-00,senha987,,
 Aluno,,Daniel Souza,,,daniel.souza@email.com,,(79) 98888-8888,123.456.789-00,senha159,,
@@ -25,4 +25,4 @@ Professor,,Fabio Souza,,,fabio.souza@email.com,,(79) 92222-2222,334.455.667-00,s
 Aluno,,Roberta Costa,,,roberta.costa@email.com,,(79) 96666-6666,889.900.112-00,senha789,,
 Professor,,Luiz Gustavo,,,luiz.gustavo@email.com,,(79) 93333-3333,223.344.556-00,senha321,,
 Aluno,,Mariana Lima,,,mariana.lima@email.com,,(79) 92222-2222,556.677.889-00,senha654,,
-Professor,,Valéria Pereira,,,valeria.pereira@email.com,,(79) 97777-7777,778.899.112-00,senha987,,
+Professor,,ValÃ©ria Pereira,,,valeria.pereira@email.com,,(79) 97777-7777,778.899.112-00,senha987,,

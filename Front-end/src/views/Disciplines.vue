@@ -4,6 +4,10 @@ import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
 
+const sendAll = () => {
+  console.log('Dados para envio:', csvData.value);
+};
+
 const router = useRouter();
 const route = useRoute();
 
@@ -89,7 +93,7 @@ function voltarPagina() {
       </div>
 
       <div v-else class="table-wrapper">
-        <CsvTable :data="csvData" />
+        <CsvTable @save="sendAll" :data="csvData" />
 
         <div class="final-button-wrapper">
           <button class="btn-finalizar" @click="finalizarImportacao">

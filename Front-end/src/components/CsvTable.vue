@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 
 const props = defineProps(['data']);
+const emits = defineEmits(['save']);
 
 const currentPage = ref(1);
 const itemsPerPage = 9;
@@ -40,11 +41,18 @@ function prevPage() {
         </thead>
         <tbody>
           <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
-            <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
+            <td v-for="(cell, header) in row" :key="header">
+              <input v-model="row[header]" class="cell-input" @blur="markDirty(rowIndex)" />
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <div class="save-all">
+      <button @click="$emit('save')">Salvar todas as alterações</button>
+    </div>
+
 
     <div class="pagination">
       <button @click="prevPage" :disabled="currentPage === 1">Anterior</button>
@@ -55,6 +63,18 @@ function prevPage() {
 </template>
 
 <style scoped>
+.cell-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 4px;
+}
+
+.cell-input:focus {
+  outline: 1px solid var(--color-primary);
+  background: var(--color-bg-input);
+}
+
 .process-container {
   background: white;
   padding: 1.5rem;
@@ -82,8 +102,8 @@ table {
   margin-top: 1rem;
   overflow-x: auto;
   max-width: 100%;
-  scrollbar-width: thin; 
-  scrollbar-color: #1161d8 transparent; 
+  scrollbar-width: thin;
+  scrollbar-color: #1161d8 transparent;
 }
 
 .table-container::-webkit-scrollbar {
@@ -135,16 +155,4 @@ td {
   background-color: #ccc;
   cursor: not-allowed;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
