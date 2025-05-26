@@ -4,16 +4,13 @@ import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
 
-const sendAll = () => {
-  console.log('Dados para envio:', csvData.value);
-};
-
 const router = useRouter();
 const route = useRoute();
 
 const csvData = ref([]);
 const csvLoaded = ref(false);
 const validCsv = ref(false);
+const dataToSend = ref([]);
 
 const id = route.params.id;
 
@@ -52,21 +49,27 @@ function selectStep(index) {
   router.push(steps[index].path);
 }
 
-function finalizarImportacao() {
+const saveData = () => {
+  dataToSend.value = JSON.stringify(csvData.value)
+  console.log('Dados para envio:', dataToSend.value);
+};
+
+function sendData() {
   currentStep.value++;
   router.push(steps[currentStep.value].path);
+  console.log('dados Enviados: ', dataToSend.value)
 }
 
 
-function voltarPagina() {
-  router.back();
+function backToHome() {
+  router.push('/');
 }
 </script>
 
 
 
 <template>
-  <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="voltarPagina" />
+  <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="backToHome" />
 
   <div class="page-layout">
     <!-- Stepper lateral -->
@@ -93,10 +96,10 @@ function voltarPagina() {
       </div>
 
       <div v-else class="table-wrapper">
-        <CsvTable @save="sendAll" :data="csvData" />
+        <CsvTable @save="saveData" :data="csvData" />
 
         <div class="final-button-wrapper">
-          <button class="btn-finalizar" @click="finalizarImportacao">
+          <button class="btn-finalizar" @click="sendData">
             Finalizar Importação
           </button>
         </div>
