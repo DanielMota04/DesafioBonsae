@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+// import { createImportProcess} from "../services/importProcessService.js"
 
 const router = useRouter();
 const route = useRoute();
@@ -33,6 +34,18 @@ function avancar() {
 
     if (currentStep.value < steps.length - 1) {
         currentStep.value++;
+
+        // const newProcess = {
+        //     "processId": `${route.params.id}`,
+        //     "academicPeriod": `${academicPeriodInput.value.trim()}`,
+        //     "startDate": `${startDateInput.value.trim()}`,
+        //     "endDate": `${endDateInput.value.trim()}}`
+        // }
+
+        // createImportProcess(newProcess)
+        //     .then((res) => console.log("Criado com sucesso:", res))
+        //     .catch((err) => console.error("Erro:", err));
+
         router.push(steps[currentStep.value].path);
     }
 }
@@ -291,7 +304,7 @@ input {
     border-radius: 5px;
     font-size: 16px;
     width: 220px;
-    
+
 }
 
 .input-button-wrapper input:not(:last-of-type) {
