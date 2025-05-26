@@ -88,7 +88,6 @@ function voltarPagina() {
             </div>
 
             <div class="form-container">
-                <label class="input-label" for="periodoLetivo">Período Letivo</label>
                 <div class="input-button-wrapper">
                     <label for="periodoLetivo">Período letivo</label>
                     <input v-model="academicPeriodInput" type="text" id="periodoLetivo" placeholder="Ex: 2023/1"
@@ -294,6 +293,7 @@ input {
 
 .input-button-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     width: 100%;
 }

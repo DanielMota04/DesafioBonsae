@@ -42,7 +42,7 @@ function prevPage() {
         <tbody>
           <tr v-for="(row, rowIndex) in paginatedData" :key="rowIndex">
             <td v-for="(cell, header) in row" :key="header">
-              <input v-model="row[header]" class="cell-input" @blur="markDirty(rowIndex)" />
+              <input v-model="row[header]" class="cell-input" />
             </td>
           </tr>
         </tbody>
@@ -50,7 +50,7 @@ function prevPage() {
     </div>
 
     <div class="save-all">
-      <button @click="$emit('save')">Salvar todas as alterações</button>
+      <button class="btn-save" @click="$emit('save')">Salvar todas as alterações</button>
     </div>
 
 
@@ -154,5 +154,17 @@ td {
 .pagination button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.btn-save {
+  background-color: #1161D8;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 </style>
