@@ -1,13 +1,11 @@
 import axios from "axios";
 
 const URL =
-  "https://aa1d3a24-6857-4369-84a6-865a5cd53b0a.mock.pstmn.io";
-  // "http://localhost:3001";
+  "/api";
 
   export async function getImportProcesses() {
     try {
-      const response = await axios.get(`${URL}/importProcess`);
-      // const response = await axios.get(`${URL}/academic-period`);
+      const response = await axios.get(`${URL}/academic-period`);
 
       return response.data;
     } catch (error) {
@@ -18,6 +16,7 @@ const URL =
 
   export async function createImportProcess(data) {
     try {
+      console.log('Dados enviados:', data); // ← Adicione isso
       const response = await axios.post(`${URL}/academic-period`, data);
       return response.data;
     } catch (error) {

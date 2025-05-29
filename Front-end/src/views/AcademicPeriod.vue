@@ -1,7 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-// import { createImportProcess} from "../services/importProcessService.js"
+import { createImportProcess} from "../services/importProcessService.js"
+
+defineProps({
+  id: String
+});
 
 const router = useRouter();
 const route = useRoute();
@@ -35,16 +39,16 @@ function avancar() {
     if (currentStep.value < steps.length - 1) {
         currentStep.value++;
 
-        // const newProcess = {
-        //     "processId": `${route.params.id}`,
-        //     "academicPeriod": `${academicPeriodInput.value.trim()}`,
-        //     "startDate": `${startDateInput.value.trim()}`,
-        //     "endDate": `${endDateInput.value.trim()}}`
-        // }
+        const newProcess = {
+            "processId": `${route.params.id}`,
+            "academicPeriod": `${academicPeriodInput.value.trim()}`,
+            "startDate": `${startDateInput.value.trim()}`,
+            "endDate": `${endDateInput.value.trim()}`
+        }
 
-        // createImportProcess(newProcess)
-        //     .then((res) => console.log("Criado com sucesso:", res))
-        //     .catch((err) => console.error("Erro:", err));
+        createImportProcess(newProcess)
+            .then((res) => console.log("Criado com sucesso:", res))
+            .catch((err) => console.error("Erro:", err));
 
         router.push(steps[currentStep.value].path);
     }

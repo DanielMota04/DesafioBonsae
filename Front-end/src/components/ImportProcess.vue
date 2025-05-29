@@ -5,6 +5,15 @@ import { getImportProcesses } from '../services/importProcessService.js';
 
 const processes = ref([]);
 
+const formatDate = (isoDate) => {
+  if (!isoDate) return '-';
+  const date = new Date(isoDate)
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 const loadProcesses = async () => {
   try {
     processes.value = await getImportProcesses();
@@ -35,9 +44,9 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <ImportProcessRow v-for="process in processes" :key="process.ProcessID" :ProcessID="process.ProcessID"
-            :academicPeriod="process.academicPeriod" :startDate="process.startDate" :endDate="process.endDate"
-            :status="process.status" :currentStep="process.currentStep"/>
+          <ImportProcessRow v-for="process in processes" :key="process.ProcessID" :ProcessID="process._id"
+            :academicPeriod="process.academicPeriod" :startDate="formatDate(process.startDate)"
+            :endDate="formatDate(process.endDate)" :status="process.status" :currentStep="process.currentStep" />
         </tbody>
       </table>
     </div>
