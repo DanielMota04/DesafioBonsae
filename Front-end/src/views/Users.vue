@@ -4,6 +4,10 @@ import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
 
+defineProps({
+  id: String
+});
+
 const router = useRouter();
 const route = useRoute();
 
