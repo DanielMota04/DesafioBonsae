@@ -56,7 +56,7 @@ function selectStep(index) {
 
 const saveData = async () => {
   dataToSend.value = csvData.value.map(item => ({
-    "Número do Processo": 1,
+    "Número do Processo": "1",
     "Período Letivo (Identificação)": item["Período Letivo (Identificação)"],
     "Disciplina": item["Disciplina"],
     "Código da Disciplina": item["Código da Disciplina*"],
@@ -78,9 +78,9 @@ async function sendData() {
 
   try {
     saveData();
-    for (const item of dataToSend.value) {
-      await createDiscipline(item);
-    }
+    const formatedData = JSON.parse(JSON.stringify(dataToSend.value));
+    console.log(formatedData);
+    await createDiscipline(formatedData);
 
     console.log('Todos os dados enviados com sucesso.');
     currentStep.value++;
@@ -89,7 +89,6 @@ async function sendData() {
   } catch (error) {
     console.error('Erro ao enviar dados:', error);
     alert("Ocorreu um erro ao enviar os dados. Verifique o console.");
-    console.log(JSON.stringify(dataToSend.value, null, 2))
   }
 }
 
