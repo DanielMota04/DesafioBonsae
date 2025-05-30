@@ -3,6 +3,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
+import { createUsers } from '../services/usersService.js';
+
 
 defineProps({
   id: String
@@ -52,14 +54,45 @@ function selectStep(index) {
 }
 
 const saveData = () => {
-  dataToSend.value = JSON.stringify(csvData.value)
-  console.log('Dados para envio:', dataToSend.value);
+  dataToSend.value = csvData.value.map(item => ({
+    "Número do Processo": id,
+    "Perfil": item["Perfil*"],
+    "Subperfil": item["Subperfil"],
+    "Nome": item["Nome*"],
+    "Nº da OAB": item["Nº da OAB"],
+    "Seccional (UF OAB)": item["Seccional (UF OAB)"],
+    "E-mail": item["E-mail*"],
+    "Matrícula (IES)": item["Matrícula (IES)"],
+    "Telefone": item["Telefone"],
+    "CPF": item["CPF"],
+    "Senha": item["Senha"],
+    "Período Curricular": item["Período Curricular"],
+    "Observações": item["Observações"]
+    
+  }))
 };
 
-function sendData() {
-  currentStep.value++;
-  router.push(steps[currentStep.value].path);
-  console.log('dados Enviados: ', dataToSend.value)
+async function sendData() {
+  if (!validCsv.value || !csvData.value.length) {
+    alert("Nenhum dado válido para enviar.");
+    return;
+  }
+
+  try {
+    saveData();
+    const formatedData = JSON.parse(JSON.stringify(dataToSend.value));
+    console.log(formatedData);
+    
+    await createUsers(formatedData);
+
+    console.log('Todos os dados enviados com sucesso.');
+    currentStep.value++;
+    router.push(steps[currentStep.value].path);
+
+  } catch (error) {
+    console.error('Erro ao enviar dados:', error);
+    alert("Ocorreu um erro ao enviar os dados. Verifique o console.");
+  }
 }
 
 
