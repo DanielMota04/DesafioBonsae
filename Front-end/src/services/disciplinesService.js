@@ -4,7 +4,7 @@ const URL = "/api";
 
 export async function createDiscipline(data) {
   try {
-    const response = await axios.post(`${URL}/disciplines`, data, {
+    const response = await axios.post(`${URL}disciplines/bulk`, data, {
       headers: {
         "Content-Type": "application/json",
       }
