@@ -56,7 +56,7 @@ function selectStep(index) {
 
 const saveData = async () => {
   dataToSend.value = csvData.value.map(item => ({
-    "Número do Processo": "1",
+    "Número do Processo": id,
     "Período Letivo (Identificação)": item["Período Letivo (Identificação)"],
     "Disciplina": item["Disciplina"],
     "Código da Disciplina": item["Código da Disciplina*"],
