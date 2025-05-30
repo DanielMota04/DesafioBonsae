@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { createImportProcess} from "../services/importProcessService.js"
+import { createImportProcess } from "../services/importProcessService.js"
 
 defineProps({
-  id: String
+    id: String
 });
 
 const router = useRouter();
@@ -27,30 +27,41 @@ const steps = [
 
 const etapasCompletas = ref([false, false, false, false, false, false]);
 
-function avancar() {
+function formatDate(inputDate) {
+    const [day, month, year] = inputDate.split('/');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+}
+
+
+async function avancar() {
 
     if (academicPeriodInput.value.trim() === "" && startDateInput.value.trim() === "" && endDateInput.value.trim() === "") {
         alert("Preencha todos os campos antes de continuar.");
         return;
     }
 
-    etapasCompletas.value[currentStep.value] = true;
-
-    if (currentStep.value < steps.length - 1) {
-        currentStep.value++;
-
+    try {
         const newProcess = {
             "processId": `${route.params.id}`,
             "academicPeriod": `${academicPeriodInput.value.trim()}`,
-            "startDate": `${startDateInput.value.trim()}`,
-            "endDate": `${endDateInput.value.trim()}`
+            "startDate": `${formatDate(startDateInput.value.trim())}`,
+            "endDate": `${formatDate(endDateInput.value.trim())}`
         }
 
-        createImportProcess(newProcess)
+        await createImportProcess(newProcess)
             .then((res) => console.log("Criado com sucesso:", res))
             .catch((err) => console.error("Erro:", err));
 
-        router.push(steps[currentStep.value].path);
+        etapasCompletas.value[currentStep.value] = true;
+
+        if (currentStep.value < steps.length - 1) {
+            currentStep.value++;
+
+            router.push(steps[currentStep.value].path);
+        }
+    } catch (error) {
+        console.error('Erro ao criar processo:', error);
+        alert("Ocorreu um erro ao criar o processo. Verifique o console.");
     }
 }
 
