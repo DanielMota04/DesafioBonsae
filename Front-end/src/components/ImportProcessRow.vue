@@ -1,33 +1,43 @@
 <script setup>
 import { computed } from 'vue';
-import { useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 const props = defineProps(["ProcessID", "academicPeriod", "startDate", "endDate", "status", "currentStep"])
+import { deleteImportProcess } from '../services/importProcessService';
 
 const router = useRouter();
 
 const stepRoutes = {
-  1: "/academicPeriod",
-  2: "/disciplines",
-  3: "/classes",
-  4: "/users",
-  5: "/LinkTeacherToClass",
-  6: "/LinkStudentToClass",
+    1: "/academicPeriod",
+    2: "/disciplines",
+    3: "/classes",
+    4: "/users",
+    5: "/LinkTeacherToClass",
+    6: "/LinkStudentToClass",
 };
 
 const statusClass = computed(() => {
     return props.status === "Em andamento" ? "in-progress" :
-           props.status === "Finalizado" ? "completed" : "";
+        props.status === "Finalizado" ? "completed" : "";
 });
 
 function continueProcess(currentStep, ProcessID) {
-  const nextStep = currentStep + 1;
-  const nextRoute = stepRoutes[nextStep];
+    const nextStep = currentStep + 1;
+    const nextRoute = stepRoutes[nextStep];
 
-  if (nextRoute) {
-    router.push(`${nextRoute}/${ProcessID}`);
-  } else {
-    console.warn("Etapa inválida ou processo já finalizado.");
-  }
+    if (nextRoute) {
+        router.push(`${nextRoute}/${ProcessID}`);
+    } else {
+        console.warn("Etapa inválida ou processo já finalizado.");
+    }
+}
+
+const deleteProcess = async (processID) => {
+    try{
+        console.log(processID)
+        await deleteImportProcess(processID);
+    }catch (error){
+        console.error("erro ao deletar processo:", error)
+    }
 }
 
 </script>
@@ -37,14 +47,14 @@ function continueProcess(currentStep, ProcessID) {
         <td><strong>{{ ProcessID }}</strong></td>
         <td>{{ academicPeriod }}</td>
         <td>{{ startDate }}</td>
-        <td>{{ endDate === "" ? "-" : endDate}}</td>
-        <td><span class="status " :class="statusClass" >{{ status }}</span></td>
-        <td v-if="props.status === 'Em andamento'">
-            <button class="btn btn-danger">Abortar</button>
-            <button class="btn btn-primary" @click="continueProcess(currentStep, ProcessID)">Continuar</button>
-        </td>
-        <td v-if="props.status === 'Finalizado'">
-            <button class="btn btn-secondary">Visualizar →</button>
+        <td>{{ endDate === "" ? "-" : endDate }}</td>
+        <td><span class="status " :class="statusClass">{{ status }}</span></td>
+        <td>
+            <button class="btn btn-danger" @click="deleteProcess(ProcessID)">Abortar</button>
+            <button v-if="props.status === 'Em andamento'" class="btn btn-primary"
+                @click="continueProcess(currentStep, ProcessID)">Continuar</button>
+            <button v-if="props.status === 'Finalizado'" class="btn btn-secondary">Visualizar →</button>
+
         </td>
     </tr>
 </template>
@@ -80,19 +90,18 @@ td {
     border: none;
 }
 
-.btn-danger{
+.btn-danger {
     color: #C20000;
     background: #FFDDDD;
 }
 
-.btn-primary{
+.btn-primary {
     color: #0C479D;
     background-color: #E5F0FB;
 }
 
-.btn-secondary{
+.btn-secondary {
     color: #0C479D;
     background-color: #CECECE;
 }
-
 </style>

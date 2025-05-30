@@ -16,11 +16,19 @@ const URL =
 
   export async function createImportProcess(data) {
     try {
-      console.log('Dados enviados:', data); // ← Adicione isso
       const response = await axios.post(`${URL}/academic-period`, data);
       return response.data;
     } catch (error) {
       console.error("Erro ao criar processo:", error);
       throw error;
+    }
+  }
+
+  export async function deleteImportProcess(id) {
+    try{
+      const response = await axios.delete(`${URL}/academic-period/rollback/ObjectId('${id}')`)
+      return response.data;
+    }catch (error){
+      console.error("erro ao deletar processo:", error);
     }
   }
