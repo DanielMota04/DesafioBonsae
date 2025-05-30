@@ -67,7 +67,6 @@ const saveData = async () => {
     "Estado": item["Estado"],
     "Campus": item["Campus"]
   }));
-  console.log("Dados formatados para envio:", dataToSend.value);
 };
 
 async function sendData() {
@@ -81,21 +80,6 @@ async function sendData() {
     const formatedData = JSON.parse(JSON.stringify(dataToSend.value));
     console.log(formatedData);
     
-//     await createDiscipline([
-//   {
-//     "Número do Processo": "1",
-//     "Período Letivo (Identificação)": "2025.1",
-//     "Disciplina": "Direito Civil I",
-//     "Código da Disciplina": "DCIV101",
-//     "Data Inicial": "2025-01-20",
-//     "Data Final": "2025-06-10",
-//     "Categoria": "Curso",
-//     "Período Curricular": "1º Período",
-//     "Estado": "Ativa",
-//     "Campus": "São Paulo"
-//   }
-// ]);
-
     await createDiscipline(formatedData);
 
     console.log('Todos os dados enviados com sucesso.');

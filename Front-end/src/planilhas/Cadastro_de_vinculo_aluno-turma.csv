@@ -1,15 +1,4 @@
 Disciplina (código),Código da turma,Matrícula (IES) ou e-mail do aluno
-C101,N01,joao.silva@email.com
-C102,N02,jose.santos@email.com
-C103,N03,ana.costa@email.com
-C101,N04,beatriz.souza@email.com
-C104,N01,carlos.martins@email.com
-C105,N02,luana.pereira@email.com
-C102,N03,marcos.rocha@email.com
-C101,N05,larissa.lima@email.com
-C103,N01,daniel.souza@email.com
-C104,N02,tamires.rocha@email.com
-C105,N03,igor.almeida@email.com
-C102,N04,sofia.oliveira@email.com
-C101,N01,roberta.costa@email.com
-C103,N02,mariana.lima@email.com
+DCIV101,DCIV101-A,joao.silva@email.com
+DCIV101,DCIV101-B,maria.souza@email.com
+
