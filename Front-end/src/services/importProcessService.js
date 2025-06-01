@@ -26,7 +26,7 @@ const URL =
 
   export async function deleteImportProcess(id) {
     try{
-      const response = await axios.delete(`${URL}/academic-period/rollback/ObjectId('${id}')`)
+      const response = await axios.delete(`${URL}/academic-period/rollback/${id})`)
       return response.data;
     }catch (error){
       console.error("erro ao deletar processo:", error);

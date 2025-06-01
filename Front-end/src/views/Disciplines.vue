@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
 import { createDiscipline } from '../services/disciplinesService.js';
+import { updateCurrentStatus} from '../services/generalService.js';
 
 defineProps({
   id: String
@@ -81,6 +82,12 @@ async function sendData() {
     console.log(formatedData);
     
     await createDiscipline(formatedData);
+
+    const newStep = {
+            "newStep": "Class"
+    }
+
+    await updateCurrentStatus(route.params.id, newStep)
 
     console.log('Todos os dados enviados com sucesso.');
     currentStep.value++;

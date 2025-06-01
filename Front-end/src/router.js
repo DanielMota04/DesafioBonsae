@@ -6,6 +6,7 @@ import Classes from "./views/Classes.vue";
 import Users from "./views/Users.vue";
 import LinkTeacherToClass from "./views/LinkTeacherToClass.vue";
 import LinkStudentToClass from "./views/LinkStudentToClass.vue";
+import FinishProcess from "./views/FinishProcess.vue";
 
 const routes = [
   { path: "/", component: Home, props: true},
@@ -15,6 +16,8 @@ const routes = [
   { path: "/users/:id", component: Users, props: true },
   { path: "/LinkTeacherToClass/:id", component: LinkTeacherToClass, props: true },
   { path: "/LinkStudentToClass/:id", component: LinkStudentToClass, props: true },
+  { path: "/finishProcess/:id", component: FinishProcess, props: true },
+
 ];
 
 const router = createRouter({

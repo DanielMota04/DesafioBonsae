@@ -1,11 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
-import { ref } from 'vue';
-import CsvUploader from '../components/CsvUploader.vue'
-import CsvTable from '../components/CsvTable.vue';
-import { createLinkStudentToClass } from '../services/studentToClassService.js';
-
-
+import { sendAllData } from '../services/generalService.js'
 
 defineProps({
   id: String
@@ -14,72 +9,15 @@ defineProps({
 const router = useRouter();
 const route = useRoute();
 
-const csvData = ref([]);
-const csvLoaded = ref(false);
-const validCsv = ref(false);
-const dataToSend = ref([]);
-
 const id = route.params.id;
 
-const requiredHeaders = [
-  "Disciplina (código)",
-  "Código da turma",
-  "Matrícula (IES) ou e-mail do aluno"
-];
 
-const handleValidCsv = ({ valid, data, isLoaded }) => {
-  validCsv.value = valid;
-  csvData.value = data;
-  csvLoaded.value = isLoaded;
-}
-
-
-const currentStep = ref(5);
-const steps = [
-  { numero: 1, nome: 'Período Letivo', path: `/academicPeriod/${id}` },
-  { numero: 2, nome: 'Disciplinas', path: `/disciplines/${id}` },
-  { numero: 3, nome: 'Turmas', path: `/classes/${id}` },
-  { numero: 4, nome: 'Usuários', path: `/users/${id}` },
-  { numero: 5, nome: 'Professor/Turma', path: `/LinkTeacherToClass/${id}` },
-  { numero: 6, nome: 'Aluno/Turma', path: `/LinkStudentToClass/${id}` },
-];
-const etapasCompletas = ref([true, false, false, false, false, false]);
-
-function selectStep(index) {
-  if (index > currentStep.value && !etapasCompletas.value[currentStep.value]) {
-    alert("Você precisa completar a etapa atual primeiro!");
-    return;
-  }
-  currentStep.value = index;
-  router.push(steps[index].path);
-}
-
-const saveData = () => {
-  dataToSend.value = csvData.value.map(item => ({
-    "Disciplina (código)": item["Disciplina (código)"],
-    "Número do Processo": id,
-    "Código da turma": item["Código da turma"],
-    "Matrícula (IES) ou e-mail do aluno": item["Matrícula (IES) ou e-mail do aluno"],
-  }))
-};
-
-async function sendData() {
-  if (!validCsv.value || !csvData.value.length) {
-    alert("Nenhum dado válido para enviar.");
-    return;
-  }
-
+async function finishImport() {
   try {
-    saveData();
-    const formatedData = {
-      students: [...dataToSend.value]
-    }
-    console.log(formatedData);
-    
-    await createLinkStudentToClass(formatedData);
+    await sendAllData(id);
 
     console.log('Todos os dados enviados com sucesso.');
-    router.push(`/finishProcess/${id}`)
+    router.push("/");
 
   } catch (error) {
     console.error('Erro ao enviar dados:', error);
@@ -99,37 +37,18 @@ function backToHome() {
 
   <div class="page-layout">
     <!-- Stepper lateral -->
-    <div class="stepper-container">
-      <div v-for="(step, index) in steps" :key="index" class="step-wrapper">
-        <button class="step-circle"
-          :class="{ active: currentStep === index, esquerda: index % 2 === 0, direita: index % 2 !== 0 }"
-          @click="selectStep(index)">
-          <div class="step-number" :class="{ 'text-active': currentStep === index }">{{ step.numero }}</div>
-          <div class="step-name" :class="{ 'text-active': currentStep === index }">{{ step.nome }}</div>
-        </button>
-      </div>
-    </div>
-
     <!-- Conteúdo central -->
     <div class="content-center">
-      <div class="logo-wrapper" :class="{ 'logo-small': csvLoaded }">
+      <div class="logo-wrapper">
         <img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" />
       </div>
 
 
-      <div v-if="!csvLoaded" class="upload-area">
-        <CsvUploader  :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" @csvLoaded="csvLoaded = true"/>
-      </div>
-
-      <div v-else class="table-wrapper">
-        <CsvTable @save="saveData" :data="csvData" />
-
         <div class="final-button-wrapper">
-          <button class="btn-finalizar" @click="sendData">
+          <button class="btn-finalizar" @click="finishImport">
             Finalizar Importação
           </button>
         </div>
-      </div>
 
     </div>
   </div>

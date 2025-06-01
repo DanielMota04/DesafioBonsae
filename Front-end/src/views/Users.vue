@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';
 import CsvUploader from '../components/CsvUploader.vue'
 import { createUsers } from '../services/usersService.js';
+import { updateCurrentStatus} from '../services/generalService.js'
 
 
 defineProps({
@@ -84,6 +85,12 @@ async function sendData() {
     console.log(formatedData);
     
     await createUsers(formatedData);
+
+    const newStep = {
+            "newStep": "Enrollment"
+    }
+
+    await updateCurrentStatus(route.params.id, newStep)
 
     console.log('Todos os dados enviados com sucesso.');
     currentStep.value++;

@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { createImportProcess } from "../services/importProcessService.js"
+import { updateCurrentStatus } from '../services/generalService.js';
 
 defineProps({
     id: String
@@ -32,7 +33,6 @@ function formatDate(inputDate) {
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 }
 
-
 async function avancar() {
 
     if (academicPeriodInput.value.trim() === "" && startDateInput.value.trim() === "" && endDateInput.value.trim() === "") {
@@ -45,18 +45,24 @@ async function avancar() {
             "processId": `${route.params.id}`,
             "academicPeriod": `${academicPeriodInput.value.trim()}`,
             "startDate": `${formatDate(startDateInput.value.trim())}`,
-            "endDate": `${formatDate(endDateInput.value.trim())}`
+            "endDate": `${formatDate(endDateInput.value.trim())}`,
+            "currentStep": "AcademicPeriod",
         }
 
         await createImportProcess(newProcess)
             .then((res) => console.log("Criado com sucesso:", res))
             .catch((err) => console.error("Erro:", err));
 
+        const newStep = {
+            "newStep": "Discipline"
+        }
+
+        await updateCurrentStatus(route.params.id, newStep)
+
         etapasCompletas.value[currentStep.value] = true;
 
         if (currentStep.value < steps.length - 1) {
             currentStep.value++;
-
             router.push(steps[currentStep.value].path);
         }
     } catch (error) {

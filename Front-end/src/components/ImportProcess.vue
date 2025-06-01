@@ -14,6 +14,14 @@ const formatDate = (isoDate) => {
   return `${day}/${month}/${year}`;
 }
 
+const defineStatus = (currentStep) => {
+  if (['AcademicPeriod', 'Discipline', 'Class', 'User', 'Enrollment'].includes(currentStep)) {
+  return 'Em andamento';
+}
+return 'Finalizado';
+}
+
+
 const loadProcesses = async () => {
   try {
     processes.value = await getImportProcesses();
@@ -46,7 +54,7 @@ onMounted(() => {
         <tbody>
           <ImportProcessRow v-for="process in processes" :key="process._id" :ProcessID="process._id"
             :academicPeriod="process.academicPeriod" :startDate="formatDate(process.startDate)"
-            :endDate="formatDate(process.endDate)" :status="process.status" :currentStep="process.currentStep" />
+            :endDate="formatDate(process.endDate)" :status="defineStatus(process.currentStep)" :currentStep="process.currentStep" />
         </tbody>
       </table>
     </div>
