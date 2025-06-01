@@ -16,6 +16,8 @@ const URL =
   export async function updateCurrentStatus(id, data){
     try {
         const response = await axios.put(`${URL}/general/status/${id}`, data);
+        console.log("ID:", id);
+        console.log("Dados:", data);
         return response.data;
     }catch (error){
         console.error('Erro ao atualizar status:', error);

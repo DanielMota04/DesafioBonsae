@@ -1,4 +1,5 @@
 <script setup>
+//disciplines.vue
 import { useRouter, useRoute } from 'vue-router';
 import { ref } from 'vue';
 import CsvTable from '../components/CsvTable.vue';

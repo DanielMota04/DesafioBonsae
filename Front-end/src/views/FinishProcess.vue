@@ -1,5 +1,7 @@
 <script setup>
+// FinishProcess.vue
 import { useRouter, useRoute } from 'vue-router';
+import { updateCurrentStatus } from '../services/generalService.js';
 import { sendAllData } from '../services/generalService.js'
 
 defineProps({
@@ -15,6 +17,12 @@ const id = route.params.id;
 async function finishImport() {
   try {
     await sendAllData(id);
+
+    const newStep = {
+            "newStep": "Finished"
+    }
+
+    await updateCurrentStatus(route.params.id, newStep)
 
     console.log('Todos os dados enviados com sucesso.');
     router.push("/");
@@ -36,8 +44,6 @@ function backToHome() {
   <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="backToHome" />
 
   <div class="page-layout">
-    <!-- Stepper lateral -->
-    <!-- Conteúdo central -->
     <div class="content-center">
       <div class="logo-wrapper">
         <img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" />

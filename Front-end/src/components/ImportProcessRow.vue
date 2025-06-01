@@ -1,4 +1,5 @@
 <script setup>
+// importProcessRow.vue
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 const props = defineProps(["ProcessID", "academicPeriod", "startDate", "endDate", "status", "currentStep"])
@@ -48,12 +49,8 @@ const deleteProcess = async (processID) => {
         <td>{{ endDate === "" ? "-" : endDate }}</td>
         <td><span class="status " :class="statusClass">{{ status }}</span></td>
         <td>
-            <button v-if="props.status === 'Em andamento'" class="btn btn-danger"
-                @click="deleteProcess(ProcessID)">Abortar</button>
-            <button v-if="props.status === 'Em andamento'" class="btn btn-primary"
-                @click="continueProcess(currentStep, ProcessID)">Continuar</button>
-        </td>
-        <td>
+            <button v-if="props.status === 'Em andamento'" class="btn btn-danger" @click="deleteProcess(ProcessID)">Abortar</button>
+            <button v-if="props.status === 'Em andamento'" class="btn btn-primary"@click="continueProcess(currentStep, ProcessID)">Continuar</button>
             <button v-if="props.status === 'Finalizado'" class="btn btn-secondary">Visualizar →</button>
         </td>
     </tr>
