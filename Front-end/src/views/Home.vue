@@ -1,12 +1,13 @@
 <script setup>
 import ImportProcess from '../components/ImportProcess.vue';
 import { useRouter } from 'vue-router';
-import { v4 as uuidv4 } from 'uuid';
+import { customAlphabet } from 'nanoid'
 
 const router = useRouter();
 
 const newProcess = () => {
-  const newID = uuidv4();
+  const generateID = customAlphabet('0123456789', 12);
+  const newID = generateID();
   router.push(`/academicPeriod/${newID}`)
 }
 
