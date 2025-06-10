@@ -93,15 +93,17 @@ function backToHome() {
 </script>
 
 <template>
-  <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="backToHome" />
-
   <div class="page-layout">
+    <img src="../assets/Arrow2.svg" alt="Voltar" class="btn-voltar" @click="backToHome" />
+
     <!-- Stepper lateral -->
     <div class="stepper-container">
       <div v-for="(step, index) in steps" :key="index" class="step-wrapper">
-        <button class="step-circle"
+        <button
+          class="step-circle"
           :class="{ active: currentStep === index, esquerda: index % 2 === 0, direita: index % 2 !== 0 }"
-          @click="selectStep(index)">
+          @click="selectStep(index)"
+        >
           <div class="step-number" :class="{ 'text-active': currentStep === index }">{{ step.numero }}</div>
           <div class="step-name" :class="{ 'text-active': currentStep === index }">{{ step.nome }}</div>
         </button>
@@ -114,9 +116,12 @@ function backToHome() {
         <img src="/src/assets/bonsae_logo1.svg" alt="Logo Bonsae" />
       </div>
 
-
       <div v-if="!csvLoaded" class="upload-area">
-        <CsvUploader :requiredHeaders="requiredHeaders" @validCsv="handleValidCsv" @csvLoaded="csvLoaded = true" />
+        <CsvUploader
+          :requiredHeaders="requiredHeaders"
+          @validCsv="handleValidCsv"
+          @csvLoaded="csvLoaded = true"
+        />
       </div>
 
       <div v-else class="table-wrapper">
@@ -128,10 +133,11 @@ function backToHome() {
           </button>
         </div>
       </div>
-
     </div>
   </div>
 </template>
+
+
 
 <style scoped>
 .page-layout {
